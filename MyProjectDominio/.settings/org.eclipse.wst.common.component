@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="MyProjectDominio">
+        <wb-resource deploy-path="/" source-path="/src"/>
+        <dependent-module archiveName="MyProjectWeb.jar" deploy-path="/" handle="module:/resource/MyProjectWeb/MyProjectWeb">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="MyProjectCore.jar" deploy-path="/" handle="module:/resource/MyProjectCore/MyProjectCore">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+    </wb-module>
+</project-modules>
