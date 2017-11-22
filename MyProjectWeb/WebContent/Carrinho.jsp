@@ -11,6 +11,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
 <title>Seu carrinho</title>
+<script>
+	
+		function Redirecionar(qtde,id){
+		window.location.href = "SalvarCarrinho?operacao=LACRAR&qtde=" + qtde + "&id=" + id;
+	}
+
+
+</script>
 </head>
 <body>
 
@@ -78,20 +86,24 @@
                                      sb.append("<div class='media-body'>");    
                                      sb.append("<h4 class='media-heading'><a href='#''>");
                                      sb.append(l.getTitulo());
+                                     System.out.print(l.getId());
                                      sb.append("</a></h4>");
                                      sb.append("</div>");
                                      sb.append("</div></td>");
                                      sb.append("<td data-th='Quantity'>");
-                                     sb.append("<input type='number' class='form-control value=1' >");
+                                     sb.append("<input type='number' class='form-control' name='numerim' onchange='Redirecionar(this.value,"+ l.getId()+")'>");
                                      sb.append("</td>");
                                      sb.append("</td>");
-                                     sb.append("<td class='col-sm-1 col-md-1 text-center'><strong>$4.87</strong></td>"); 
+                                     sb.append("<td class='col-sm-1 col-md-1 text-center'><strong>"); 
+                                     sb.append(l.getValor());
+                                     System.out.println(l.getValor());
+                                     sb.append("</strong></td>");
                                      sb.append("<td class='col-sm-1 col-md-1 text-center'><strong>$14.61</strong></td>");
                                      sb.append("<td class='col-sm-1 col-md-1'>");
-                                     sb.append("<form action='Remover'>");
-                                     sb.append("<input type='submit' id='operacao'name='operacao' value='REMOVER' class='btn btn-danger'>");
-                                     sb.append("</form>");
-                                     sb.append("</input></td>");
+                                     sb.append("<a href='SalvarCarrinho?operacao=REMOVER&id=" + l.getId() +"'>");
+                                     sb.append("<button class='btn btn-danger'>REMOVER</button>");
+                                     sb.append("</a>");                                    
+                                     sb.append("</td>"); 
                                      sb.append("</tr>");       
                                      sb.append("</tbody>");
                                      out.print(sb.toString());
@@ -99,7 +111,7 @@
  	
 									request.getSession().setAttribute("mapCar", map);	
 						} 
-%>
+				%>
                 <tfoot>
                     <tr>
                         <td><h5>Total<br>Frete</h5><h3>Total</h3></td>

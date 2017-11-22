@@ -40,6 +40,7 @@ public class AddCarrinhoViewHelper implements IViewHelper {
 			return new Unidade();
 		}
 		
+		//  Operação para remover itens no carrinho de acordo com a ID de uma txt "hidden"
 		if(m != null && operacao.equals("REMOVER"))
 		{
 			System.out.println("estou aquiiiiii");
@@ -60,6 +61,13 @@ public class AddCarrinhoViewHelper implements IViewHelper {
 				return new Unidade();
 		}
 		
+		if(operacao.equals("LACRAR"))
+		{
+			System.out.println("estou aquiiiiii");
+			int txtId =  Integer.parseInt(request.getParameter("id"));
+			int txtqtd =  Integer.parseInt(request.getParameter("qtde"));
+		}
+		
 		if(BookList != null)
 		{
 			if(m.containsKey(l.getId()))
@@ -76,6 +84,9 @@ public class AddCarrinhoViewHelper implements IViewHelper {
 			}
 			return new Unidade();
 		}
+		
+		
+		
 		return new Unidade();
 	}
 
@@ -85,13 +96,26 @@ public class AddCarrinhoViewHelper implements IViewHelper {
 		
 		RequestDispatcher d = null;
 		String operacao = request.getParameter("operacao");
+		
+		if (operacao.equals("REMOVER")){
+			System.out.println("heeeeeeeeey");
+			d = request.getRequestDispatcher("Carrinho.jsp");
+		}
+		
 		if (operacao.equals("COMPRAR")) {
 			request.getSession().setAttribute("resultadoLivro", resultado);
 			d = request.getRequestDispatcher("Carrinho.jsp");
 		}
-
-		d.forward(request, response);
+		if (operacao.equals("LACRAR")){
+			System.out.println("heeeeeeeeey");
+			d = request.getRequestDispatcher("Carrinho.jsp");
+		}
 		
-	}
+		
+		
+		d.forward(request, response);
 
+	}
+	
+	
 }

@@ -70,7 +70,7 @@ public class LivroDAO extends AbstractJdbcDAO {
 		try {
 			connection.setAutoCommit(false);
 			StringBuilder sql = new StringBuilder();
-			sql.append("UPDATE livros SET autor=?, categoria=?, subcategoria=?, ano=?, titulo=?, editora=?, edicao=?, ISBN=?, nPaginas=?, sinopse=?, status=?"
+			sql.append("UPDATE livros SET autor=?, categoria=?, subcategoria=?, ano=?, titulo=?, editora=?, edicao=?, ISBN=?, nPaginas=?, sinopse=?, status=?, valor=?, quantidade=?"
 					+  " WHERE ID_Livro=?");
 			
 			pst = connection.prepareStatement(sql.toString());
@@ -85,7 +85,9 @@ public class LivroDAO extends AbstractJdbcDAO {
 			pst.setString(9, livro.getNpaginas());
 			pst.setString(10, livro.getSinopse());
 			pst.setBoolean(11, livro.getStatus());
-			pst.setInt(12, livro.getId());
+			pst.setDouble(12, livro.getValor());
+			pst.setInt(13, livro.getQuantidade());
+			pst.setInt(14, livro.getId());
 			pst.executeUpdate();			
 			connection.commit();
 			
@@ -113,7 +115,7 @@ public class LivroDAO extends AbstractJdbcDAO {
 
 	
 		sql.append(
-				"SELECT DISTINCT  a.ID_Livro, a.autor,a.categoria,a.subcategoria, a.ano, a.titulo, a.editora, a.edicao, a.isbn,a.npaginas, a.sinopse, a.status");
+				"SELECT DISTINCT  a.ID_Livro, a.autor,a.categoria,a.subcategoria, a.ano, a.titulo, a.editora, a.edicao, a.isbn,a.npaginas, a.sinopse, a.status, a.valor, a.quantidade");
 		sql.append(" FROM livros a ");
 		sql.append(" WHERE 1=1 ");
 		if (livro.getId() != null && livro.getId() > 0) {
@@ -147,6 +149,10 @@ public class LivroDAO extends AbstractJdbcDAO {
 		if (livro.getSubcategoria() != null && livro.getSubcategoria().length() > 0) {
 			sql.append(" and a.subcategoria like '%" + livro.getSubcategoria() + "%'");
 		}
+		if (livro.getValor() > 0) {
+			sql.append(" and a.subcategoria like '%" + livro.getSubcategoria() + "%'");
+		}
+		
 		
 		
 		try {
@@ -171,6 +177,8 @@ public class LivroDAO extends AbstractJdbcDAO {
 					l.setNpaginas(rs.getString("npaginas"));
 					l.setSinopse(rs.getString("sinopse"));
 					l.setStatus(rs.getBoolean("status"));
+					l.setValor(rs.getDouble("valor"));
+					l.setQuantidade(rs.getInt("quantidade"));
 					livros.add(l);
 
 				}

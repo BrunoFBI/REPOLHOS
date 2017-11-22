@@ -4,6 +4,23 @@ import MyProjectDominio.EntidadeDominio;
 
 public class Livro extends EntidadeDominio {
 	private String autor, categoria, subcategoria, ano, titulo, editora, edicao, ISBN, npaginas, sinopse;
+	double valor;
+	int quantidade;
+	public int getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	public double getValor() {
+		return valor;
+	}
+
+	public void setValor(double valor) {
+		this.valor = valor;
+	}
 	boolean status;
 	
 	public String getAutor() {
