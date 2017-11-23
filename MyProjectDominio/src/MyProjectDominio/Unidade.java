@@ -2,14 +2,15 @@ package MyProjectDominio;
 
 public class Unidade extends EntidadeDominio {
 	private Livro livro;
-	private int estoque;
+	private int quantidade;
 
-	public int getEstoque() {
-		return estoque;
+	
+	public int getQuantidade() {
+		return quantidade;
 	}
 
-	public void setEstoque(int estoque) {
-		this.estoque = estoque;
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
 	}
 
 	public Livro getLivro() {
