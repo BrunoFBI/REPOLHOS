@@ -14,28 +14,17 @@
 <title>Seu carrinho</title>
 <script>
 	
-		function Redirecionar(qtde,id){
-		window.location.href = "SalvarCarrinho?operacao=LACRAR&qtde=" + qtde + "&id=" + id;
-		document.getElementById("numerim").value = qtde;
-	}
-	
-		function getParameterByName(qtde,url) {
-			
-		    var url = window.location.href; // or window.location.href for current url
-		    var captured = /qtde=([^&]+)/.exec(url)[1]; // Value is in [1] ('384' in our case)
-		    var result = captured ? captured : 'myDefaultValue';
-		    document.getElementById("numerim").value = result;
-		    
-		}	
-
+	function Redirecionar(qtde,id){
+	window.location.href = "SalvarCarrinho?operacao=MUDAR&qtde=" + qtde + "&id=" + id;
+	document.getElementById("numerim").value = qtde;
+}	
 </script>
 </head>
-<body onload="getParameterByName()">
+<body>
 
 <%
 	List<Livro> livros = (List<Livro>)request.getSession().getAttribute("livros");	
 	Map<Integer, Integer> map = (Map<Integer, Integer>) request.getSession().getAttribute("mapCar");
-
 %>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
@@ -108,7 +97,9 @@
                                      sb.append(l.getValor());
                                      System.out.println(l.getValor());
                                      sb.append("</strong></td>");
-                                     sb.append("<td class='col-sm-1 col-md-1 text-center'><strong>$14.61</strong></td>");
+                                     sb.append("<td class='col-sm-1 col-md-1 text-center'><strong>");
+                                     sb.append("50,00");
+                                     sb.append("</strong></td>");
                                      sb.append("<td class='col-sm-1 col-md-1'>");
                                      sb.append("<a href='SalvarCarrinho?operacao=REMOVER&id=" + l.getId() +"'>");
                                      sb.append("<button class='btn btn-danger'>REMOVER</button>");

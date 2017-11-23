@@ -17,6 +17,7 @@ import MyProjectDominio.Cliente;
 import MyProjectDominio.Endereco;
 import MyProjectDominio.EntidadeDominio;
 import MyProjectDominio.Livro;
+import MyProjectDominio.Unidade;
 
 public class Fachada implements IFachada{
 
@@ -57,7 +58,7 @@ public class Fachada implements IFachada{
 		ValidadorCnpj vCnpj = new ValidadorCnpj();
 		ComplementarDtCadastro cDtCadastro = new ComplementarDtCadastro();*/
 		
-		/* Criando uma lista para conter as regras de negócio de fornencedor
+		/* Criando uma lista para conter as regras de negócio de livros
 		 * quando a operação for salvar
 		 */
 		List<IStrategy> rnsSalvarLivro = new ArrayList<IStrategy>();
@@ -74,18 +75,24 @@ public class Fachada implements IFachada{
 		Map<String, List<IStrategy>> rnsLivro = new HashMap<String, List<IStrategy>>();
 		Map<String, List<IStrategy>> rnsCliente = new HashMap<String, List<IStrategy>>();
 		Map<String, List<IStrategy>> rnsEndereco = new HashMap<String, List<IStrategy>>();
+		Map<String, List<IStrategy>> rnsCarrinho= new HashMap<String, List<IStrategy>>();
+		List<IStrategy> rnsValidarCarrinho = new ArrayList<IStrategy>();
 		/*
 		 * Adiciona a listra de regras na operação salvar no mapa do fornecedor (lista criada na linha 70)
 		 */
 		rnsLivro.put("SALVAR", rnsSalvarLivro);
 		rnsCliente.put("SALVAR",rnsSalvarCliente);
 		rnsEndereco.put("SALVAR", rnsSalvarEndereco);
+		rnsLivro.put("COMPRAR", rnsValidarCarrinho);
 		
-		/* Adiciona o mapa(criado na linha 79) com as regras indexadas pelas operações no mapa geral indexado 
-		 * pelo nome da entidade
+		// Adiciona o mapa(criado na linha 79) com as regras indexadas pelas operações no mapa geral indexado 
+		  //pelo nome da entidade
 		 
-		rns.put(Fornecedor.class.getName(), rnsLivro);*/
+		rns.put(Livro.class.getName(), rnsLivro);
+		rns.put(Unidade.class.getName(),rnsCarrinho);
 	}
+	
+	
 	
 	
 	@Override
@@ -212,10 +219,32 @@ public class Fachada implements IFachada{
 
 	}
 	
-	public Resultado comprar(EntidadeDominio entidade) {
-		resultado = new Resultado();
-		String msg = executarRegras(entidade, "COMPRAR");
-		resultado.setMsg(msg);
+	public Resultado comprar(EntidadeDominio entidade) {;
+		Resultado resultado = new Resultado();
+		Unidade itemCarrinho = (Unidade)entidade;
+		Livro livroCarrinho = itemCarrinho.getLivro();
+		if(livroCarrinho != null)
+		{
+	
+			LivroDAO dao = new LivroDAO();
+			List<EntidadeDominio> entidadeLivro = dao.consultar(livroCarrinho);
+			
+			Livro l = (Livro)entidadeLivro.get(0);
+			itemCarrinho.setLivro(l);
+			
+			List<EntidadeDominio> itens = new ArrayList<EntidadeDominio>();
+			itens.add(itemCarrinho);
+			
+			resultado.setEntidades(itens);
+			
+			String msg = executarRegras(itemCarrinho, "COMPRAR");
+			
+			resultado.setMsg(msg);
+			if(resultado.getMsg() != null)
+			{
+				itemCarrinho.setEstoque(l.getQuantidade());
+			}			
+		}
 		return resultado;
 	}
 	

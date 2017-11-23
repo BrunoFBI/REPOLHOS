@@ -1,3 +1,4 @@
+
 package MyProject.web.vh.impl;
 
 import java.io.IOException;
@@ -61,7 +62,7 @@ public class AddCarrinhoViewHelper implements IViewHelper {
 				return new Unidade();
 		}
 		
-		if(operacao.equals("LACRAR"))
+		if(operacao.equals("MUDAR"))
 		{
 			System.out.println("estou aquiiiiii");
 			int txtId =  Integer.parseInt(request.getParameter("id"));
@@ -90,7 +91,7 @@ public class AddCarrinhoViewHelper implements IViewHelper {
 		return new Unidade();
 	}
 
-	@Override
+
 	public void setView(Resultado resultado, HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		
@@ -106,7 +107,7 @@ public class AddCarrinhoViewHelper implements IViewHelper {
 			request.getSession().setAttribute("resultadoLivro", resultado);
 			d = request.getRequestDispatcher("Carrinho.jsp");
 		}
-		if (operacao.equals("LACRAR")){
+		if (operacao.equals("MUDAR")){
 			System.out.println("heeeeeeeeey");
 			d = request.getRequestDispatcher("Carrinho.jsp");
 		}
