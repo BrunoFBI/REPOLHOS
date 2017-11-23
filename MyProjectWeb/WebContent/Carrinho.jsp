@@ -4,6 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
@@ -15,12 +16,21 @@
 	
 		function Redirecionar(qtde,id){
 		window.location.href = "SalvarCarrinho?operacao=LACRAR&qtde=" + qtde + "&id=" + id;
+		document.getElementById("numerim").value = qtde;
 	}
-
+	
+		function getParameterByName(qtde,url) {
+			
+		    var url = window.location.href; // or window.location.href for current url
+		    var captured = /qtde=([^&]+)/.exec(url)[1]; // Value is in [1] ('384' in our case)
+		    var result = captured ? captured : 'myDefaultValue';
+		    document.getElementById("numerim").value = result;
+		    
+		}	
 
 </script>
 </head>
-<body>
+<body onload="getParameterByName()">
 
 <%
 	List<Livro> livros = (List<Livro>)request.getSession().getAttribute("livros");	
@@ -91,7 +101,7 @@
                                      sb.append("</div>");
                                      sb.append("</div></td>");
                                      sb.append("<td data-th='Quantity'>");
-                                     sb.append("<input type='number' class='form-control' name='numerim' onchange='Redirecionar(this.value,"+ l.getId()+")'>");
+                                     sb.append("<input type='number' class='form-control' id='numerim' onchange='Redirecionar(this.value,"+ l.getId()+")'>");
                                      sb.append("</td>");
                                      sb.append("</td>");
                                      sb.append("<td class='col-sm-1 col-md-1 text-center'><strong>"); 
