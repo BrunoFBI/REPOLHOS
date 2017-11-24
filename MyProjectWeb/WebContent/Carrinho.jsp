@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
- <%@ page import="MyProjectCore.aplicacao.Resultado, MyProjectDominio.Livro, java.util.*"%>
+ <%@ page import="MyProjectCore.aplicacao.Resultado, MyProjectDominio.*, java.util.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -23,8 +23,30 @@
 <body>
 
 <%
-	List<Livro> livros = (List<Livro>)request.getSession().getAttribute("livros");	
-	Map<Integer, Integer> map = (Map<Integer, Integer>) request.getSession().getAttribute("mapCar");
+String stringId = (String) request.getSession().getAttribute("usuarioID");
+if (stringId != null) {
+	if (!stringId.trim().equals("0")) {
+		if (request.getSession().getAttribute("usuariodeslogado") != null) {
+			Map<Integer, Pedido> mapaUsuarios = (Map<Integer, Pedido>) request.getSession() .getAttribute("mapaUsuarios");
+			Pedido p = mapaUsuarios.get(0);
+			mapaUsuarios.put(Integer.parseInt(stringId), p);
+			mapaUsuarios.remove(0);
+			request.getSession().removeAttribute("usuariodeslogado");
+			request.getSession().setAttribute("mapaUsuarios", mapaUsuarios);
+		}
+	}
+}
+if (request.getSession().getAttribute("redirecionar") == null) {
+	request.getSession().setAttribute("redirecionar", "1");
+	response.sendRedirect("Carrinho.jsp");
+	return;
+}
+request.getSession().setAttribute("redirecionar", null);
+Map<Integer, Pedido> map = (Map<Integer, Pedido>) request.getSession().getAttribute("mapaUsuarios");
+Resultado cupom = (Resultado) request.getSession().getAttribute("resultadoCupom");
+Resultado res = (Resultado) request.getSession().getAttribute("resultadoLivro");
+List<Unidade> unidade = new ArrayList<Unidade>();
+String usuario = (String) request.getSession().getAttribute("username");
 %>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
@@ -67,52 +89,74 @@
                         <th>Quantidade</th>
                         <th>Preço</th>
                         <th style="padding-left:84px;">Total</th>
+                        <%
+									if (res != null) {
+										if (res.getMsg() == null) {
+											out.print("<td> </td>");
+										}else
+											out.print(res.getMsg());
+									}
+									System.out.println(res.getMsg());
+								%>
                     </tr>
                 </thead>
                <%
-						if(livros!= null)
-						{
-							StringBuilder sb = new StringBuilder();
-							
-							for(int i = 0; i < map.size(); i++)	
-							{
-								     Livro l = livros.get(i); 
-								     sb.setLength(0);
-									 sb.append("<tbody>");
-                                     sb.append("<tr>");
-                                     sb.append("<td class='col-sm-8 col-md-6'>");
-                                     sb.append("<div class='media'>");                                   
-                                     sb.append("<div class='media-body'>");    
-                                     sb.append("<h4 class='media-heading'><a href='#''>");
-                                     sb.append(l.getTitulo());
-                                     System.out.print(l.getId());
-                                     sb.append("</a></h4>");
-                                     sb.append("</div>");
-                                     sb.append("</div></td>");
-                                     sb.append("<td data-th='Quantity'>");
-                                     sb.append("<input type='number' class='form-control' id='numerim' onchange='Redirecionar(this.value,"+ l.getId()+")'>");
-                                     sb.append("</td>");
-                                     sb.append("</td>");
-                                     sb.append("<td class='col-sm-1 col-md-1 text-center'><strong>"); 
-                                     sb.append(l.getValor());
-                                     System.out.println(l.getValor());
-                                     sb.append("</strong></td>");
-                                     sb.append("<td class='col-sm-1 col-md-1 text-center'><strong>");
-                                     sb.append("50,00");
-                                     sb.append("</strong></td>");
-                                     sb.append("<td class='col-sm-1 col-md-1'>");
-                                     sb.append("<a href='SalvarCarrinho?operacao=REMOVER&id=" + l.getId() +"'>");
-                                     sb.append("<button class='btn btn-danger'>REMOVER</button>");
-                                     sb.append("</a>");                                    
-                                     sb.append("</td>"); 
-                                     sb.append("</tr>");       
-                                     sb.append("</tbody>");
-                                     out.print(sb.toString());
-                             }	
- 	
-									request.getSession().setAttribute("mapCar", map);	
-						} 
-				%>
+               	double subTotal = 0;
+				double desconto = 0;
+				double precoTotal = 0;
+				double precoFrete = 0;
+				if (map != null) {
+					String txtId = (String) request.getSession().getAttribute("userid");
+					int id = Integer.parseInt(txtId);
+					//Map<Integer, Resultado> mapaResultado = (Map<Integer, Resultado>)request.getSession().getAttribute("mapaResultado");
+					StringBuilder sb = new StringBuilder();
+					Pedido p = map.get(id);
+					unidade = p.getUnidade();
+					
+					if (unidade.size() != 0) {
+						for (int i = 0; i < unidade.size(); i++) {
+							sb.setLength(0);
+							Unidade uni = unidade.get(i);
+							Livro l = uni.getLivro();
+               			
+							sb.append("<tbody>");
+                            sb.append("<tr>");
+                            sb.append("<td class='col-sm-8 col-md-6'>");
+                            sb.append("<div class='media'>");                                   
+                            sb.append("<div class='media-body'>");    
+                            sb.append("<h4 class='media-heading'><a href='#''>");
+                            sb.append(l.getTitulo());                
+                            sb.append("</a></h4>");
+                            sb.append("</div>");
+                            sb.append("</div></td>");
+                         // Pega titulo do livro na lista
+                            sb.append("<td data-th='Quantity'>");
+                            sb.append("<input type='number' class='form-control' value='" + uni.getQuantidade() + "' id='numerim' onchange='Redirecionar(this.value,"+ l.getId()+")'>");
+                         // input qye chama a função de redirecionamento cada vez que é alterada   
+                            sb.append("</td>");
+                            sb.append("</td>");
+                            sb.append("<td class='col-sm-1 col-md-1 text-center'><strong>"); 
+                            sb.append(l.getValor());
+                            System.out.println(l.getValor());
+                            sb.append("<td class='col-sm-1 col-md-1 text-center'><strong>");
+                            sb.append("50,00");
+                            sb.append("</strong></td>");
+                            sb.append("<td class='col-sm-1 col-md-1'>");
+                            sb.append("<a href='SalvarCarrinho?operacao=REMOVER&id=" + l.getId() +"'>");
+                            sb.append("<button class='btn btn-danger'>REMOVER</button>");
+                            sb.append("</a>");                                    
+                            sb.append("</td>"); 
+                            sb.append("</tr>");       
+                            sb.append("</tbody>");
+                            out.print(sb.toString());
+						}
+               	
+						request.getSession().setAttribute("mapaCarrinho", map);
+						precoTotal = precoTotal + precoFrete;
+               
+					}
+				}
+               %>
                 <tfoot>
                     <tr>
                         <td><h5>Total<br>Frete</h5><h3>Total</h3></td>

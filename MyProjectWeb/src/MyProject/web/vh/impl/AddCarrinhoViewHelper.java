@@ -24,29 +24,31 @@ public class AddCarrinhoViewHelper implements IViewHelper {
 	@Override
 	public EntidadeDominio getEntidade(HttpServletRequest request) {
 		
+		request.getSession().setAttribute("userid", "0");
+		String stringId = (String)request.getSession().getAttribute("userid");
 		Livro l = (Livro) request.getSession().getAttribute("livro");
 		Map<Integer, Pedido> mapaUsuarios = (Map<Integer, Pedido>)request.getSession().getAttribute("mapaUsuarios");
 		Map<Integer, Resultado> mapaResultado = (Map<Integer, Resultado>)request.getSession().getAttribute("mapaResultado");
 		String operacao = (String)request.getParameter("operacao");		
-		
-		String stringId = (String)request.getSession().getAttribute("userid");
 			
 		if(mapaUsuarios == null)
 		{
 			mapaUsuarios = new HashMap<Integer, Pedido>();
 			Pedido p = new Pedido();
 			p.setUnidade(new ArrayList<Unidade>());
-			Unidade i = new Unidade();
-			i.setLivro(l);
-			i.setQuantidade(1);
-			p.getUnidade().add(i);
+			Unidade u = new Unidade();
+			u.setLivro(l);
+			u.setQuantidade(1);
+			p.getUnidade().add(u);
 			int idUsuario = Integer.parseInt(stringId);
 			mapaUsuarios.put(idUsuario, p);
-			return i;
+			return u;
 		}
 		
+		
+		
 		//  Operação para remover itens no carrinho de acordo com a ID de uma txt "hidden"
-		if(m != null && operacao.equals("REMOVER"))
+		/*if(m != null && operacao.equals("REMOVER"))
 		{
 			System.out.println("estou aquiiiiii");
 			String txtId = request.getParameter("id");
@@ -65,32 +67,40 @@ public class AddCarrinhoViewHelper implements IViewHelper {
 				request.getSession().setAttribute("mapCar", m);		
 				return new Unidade();
 		}
+		}*/
 		
 		if(operacao.equals("MUDAR"))
 		{
 			System.out.println("estou aquiiiiii");
-			int txtId =  Integer.parseInt(request.getParameter("id"));
-			int txtqtd =  Integer.parseInt(request.getParameter("qtde"));
+			String txtIdUsuario = (String) request.getSession().getAttribute("userid");
+			int idUsuario = Integer.parseInt(txtIdUsuario);
+			String txtIdLivro = request.getParameter("id");
+			int idLivro = Integer.parseInt(txtIdLivro);
+			Pedido p = mapaUsuarios.get(idUsuario);
+			Livro book;
+			Unidade u = new Unidade();
+			for (int i = 0; i < p.getUnidade().size(); i++) {
+				if (p.getUnidade().get(i).getLivro().getId() == idLivro) {
+					book = p.getUnidade().get(i).getLivro();
+					u = p.getUnidade().get(i);
+
+				}
+			}
+
+			return u;
 		}
 		
-		if(BookList != null)
+			
+		
+		
+		
+		if(mapaUsuarios != null)
 		{
-			if(m.containsKey(l.getId()))
-			{
-				m.put(l.getId(), m.get(l.getId()) + 1);
-				request.getSession().setAttribute("mapCar", m);
-			}
-			if(!m.containsKey(l.getId()))
-			{
-				BookList.add(l);
-				m.put(l.getId(), 1);
-				request.getSession().setAttribute("livros", BookList);
-				request.getSession().setAttribute("mapCar", m);	
-			}
-			return new Unidade();
+			Unidade i = new Unidade();
+			i.setQuantidade(1);
+			i.setLivro(l);
+			return i;
 		}
-		
-		
 		
 		return new Unidade();
 	}
@@ -152,7 +162,7 @@ public class AddCarrinhoViewHelper implements IViewHelper {
 						if(!listaIds.contains(unidade.getLivro().getId()))
 							p.getUnidade().add(unidade); 
 						else
-							p.getItem().get(indice).setQtde(p.getUnidade().get(indice).getQtde() + 1);
+							p.getUnidade().get(indice).setQuantidade(p.getUnidade().get(indice).getQuantidade() + 1);
 						
 						mapaUsuarios.replace(id, p);  
 						request.getSession().setAttribute("mapaUsuarios", mapaUsuarios);
@@ -163,7 +173,7 @@ public class AddCarrinhoViewHelper implements IViewHelper {
 				{
 					List<EntidadeDominio> e = resultado.getEntidades();  //pegando o resultado que retorna da fachada
 
-					Item item = (Item)e.get(0);//pega o único item que retornou da fachada
+					Unidade unidade = (Unidade)e.get(0);//pega o único item que retornou da fachada
 					Pedido p = mapaUsuarios.get(id); //pega o pedido que está associado com a id do usuário
 					
 					if(p == null)
@@ -171,8 +181,8 @@ public class AddCarrinhoViewHelper implements IViewHelper {
 						p = new Pedido();
 					}
 					
-					p.setItem(new ArrayList<Item>()); 
-					p.getItem().add(item);  
+					p.setUnidade(new ArrayList<Unidade>()); 
+					p.getUnidade().add(unidade);  
 					
 					if(mapaUsuarios.size() == 0 || !mapaUsuarios.containsKey(id))
 					{
@@ -193,16 +203,64 @@ public class AddCarrinhoViewHelper implements IViewHelper {
 			
 			d= request.getRequestDispatcher("Carrinho.jsp");  
 		} //operacação == VERIFICAR
-		}
+		
 		if (operacao.equals("MUDAR")){
-			System.out.println("heeeeeeeeey");
-			d = request.getRequestDispatcher("Carrinho.jsp");
-		}
+			System.out.println("oooooooooooi");
+			Map<Integer, Pedido> mapaUsuarios = (HashMap<Integer, Pedido>) request.getSession().getAttribute("mapaUsuarios");
 		
-		
-		
-		d.forward(request, response);
+			String txtIdLivro = request.getParameter("id");
+			Integer idLivro = Integer.parseInt(txtIdLivro);
+			String txtIdUsuario = (String) request.getSession().getAttribute("userid");
+			Integer idUsuario = Integer.parseInt(txtIdUsuario);
+			Pedido p = mapaUsuarios.get(idUsuario);
+			if (resultado.getMsg() == null) {
+				for (int i = 0; i < p.getUnidade().size(); i++) {
+					Livro l = p.getUnidade().get(i).getLivro();
+					if (l.getId() == idLivro) {
+					
+						int txtqtd =  Integer.parseInt(request.getParameter("qtde"));
+						p.getUnidade().get(i).setQuantidade(txtqtd);
+						System.out.println(txtqtd);
+						break;
+					}
+				}
 
+				mapaUsuarios.replace(idUsuario, p);
+				request.getSession().setAttribute( "mapaUsuarios", mapaUsuarios);
+			}
+			
+			if (resultado.getMsg() != null) {
+
+				List<EntidadeDominio> ed = resultado.getEntidades();
+				Unidade unidade = (Unidade) ed.get(0);
+				p = mapaUsuarios.get(idUsuario);
+				Integer qtdeLivrosRestantes = unidade.getQuantidade();
+
+				for (int i = 0; i < p.getUnidade().size(); i++) {
+					Livro l = p.getUnidade().get(i).getLivro();
+					if (l.getId() == idLivro) {
+						if (operacao.equals("MUDAR") && qtdeLivrosRestantes == p.getUnidade().get(i).getQuantidade()) {
+							
+							Integer qtdeLivro = p.getUnidade().get(i).getQuantidade() - 1;
+							p.getUnidade().get(i).setQuantidade(qtdeLivro);
+						} else {
+							p.getUnidade().get(i).setQuantidade(qtdeLivrosRestantes);
+						}
+
+						break;
+					}
+				}
+
+				mapaUsuarios.replace(idUsuario, p);
+
+			}
+			
+			request.getSession().setAttribute("resultadoLivro", resultado);
+			request.getSession().setAttribute("mapaUsuarios", mapaUsuarios);
+			d = request.getRequestDispatcher("Carrinho.jsp");
+
+		}
+		d.forward(request, response);
 	}
 	
 	
