@@ -96,7 +96,7 @@ String usuario = (String) request.getSession().getAttribute("username");
 										}else
 											out.print(res.getMsg());
 									}
-									System.out.println(res.getMsg());
+									System.out.println("To nulo kkkkkk: "+ res.getMsg());
 								%>
                     </tr>
                 </thead>
@@ -139,7 +139,7 @@ String usuario = (String) request.getSession().getAttribute("username");
                             sb.append(l.getValor());
                             System.out.println(l.getValor());
                             sb.append("<td class='col-sm-1 col-md-1 text-center'><strong>");
-                            sb.append("50,00");
+                            sb.append(l.getValor() * uni.getQuantidade());
                             sb.append("</strong></td>");
                             sb.append("<td class='col-sm-1 col-md-1'>");
                             sb.append("<a href='SalvarCarrinho?operacao=REMOVER&id=" + l.getId() +"'>");

@@ -86,7 +86,7 @@ public class Fachada implements IFachada{
 		rnsLivro.put("SALVAR", rnsSalvarLivro);
 		rnsCliente.put("SALVAR",rnsSalvarCliente);
 		rnsEndereco.put("SALVAR", rnsSalvarEndereco);
-		rnsLivro.put("COMPRAR", rnsValidarCarrinho);
+		rnsCarrinho.put("COMPRAR", rnsValidarCarrinho);
 		
 		// Adiciona o mapa(criado na linha 79) com as regras indexadas pelas operações no mapa geral indexado 
 		  //pelo nome da entidade
@@ -227,7 +227,7 @@ public class Fachada implements IFachada{
 		Resultado resultado = new Resultado();
 		Unidade itemCarrinho = (Unidade)entidade;
 		Livro livroCarrinho = itemCarrinho.getLivro();
-		System.out.println("fabiolaaaaaaaaaa");
+		System.out.println(" Resultado comprar");
 		if(livroCarrinho != null)
 		{
 			System.out.println("TO AQUIIIIIIIII");
@@ -236,7 +236,7 @@ public class Fachada implements IFachada{
 			List<EntidadeDominio> entidadeLivro = dao.consultar(livroCarrinho);
 			
 			Livro l = (Livro)entidadeLivro.get(0);
-			System.out.println(l.getId());
+			System.out.println("tamo ae"+ entidade.getClass().getName());
 			itemCarrinho.setLivro(l);
 			
 			List<EntidadeDominio> itens = new ArrayList<EntidadeDominio>();
@@ -248,14 +248,15 @@ public class Fachada implements IFachada{
 			
 			resultado.setMsg(msg);
 			if(resultado.getMsg() != null)
-			{
-				itemCarrinho.setQuantidade(l.getQuantidade());
+			{	System.out.println("Melancia");
+				itemCarrinho.setQuantidade(itemCarrinho.getQuantidade());
 			}			
 		}
 		return resultado;
 	}
 	
 	private String executarRegras(EntidadeDominio entidade, String operacao){
+		 System.out.println("Eu executo Rgras");
 		String nmClasse = entidade.getClass().getName();		
 		StringBuilder msg = new StringBuilder();
 		

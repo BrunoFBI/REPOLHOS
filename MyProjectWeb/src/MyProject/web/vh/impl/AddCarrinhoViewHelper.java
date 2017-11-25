@@ -71,7 +71,7 @@ public class AddCarrinhoViewHelper implements IViewHelper {
 		
 		if(operacao.equals("MUDAR"))
 		{
-			System.out.println("estou aquiiiiii");
+			System.out.println("Entrei no Mudar");
 			String txtIdUsuario = (String) request.getSession().getAttribute("userid");
 			int idUsuario = Integer.parseInt(txtIdUsuario);
 			String txtIdLivro = request.getParameter("id");
@@ -115,7 +115,7 @@ public class AddCarrinhoViewHelper implements IViewHelper {
 		String stringId = (String)request.getSession().getAttribute("userid");
 		
 		if (operacao.equals("REMOVER")){
-			System.out.println("heeeeeeeeey");
+			System.out.println("Entrei no remover");
 			d = request.getRequestDispatcher("Carrinho.jsp");
 		}
 		
@@ -205,7 +205,7 @@ public class AddCarrinhoViewHelper implements IViewHelper {
 		} //operacação == VERIFICAR
 		
 		if (operacao.equals("MUDAR")){
-			System.out.println("oooooooooooi");
+			System.out.println("Entrei no Mudar");
 			Map<Integer, Pedido> mapaUsuarios = (HashMap<Integer, Pedido>) request.getSession().getAttribute("mapaUsuarios");
 		
 			String txtIdLivro = request.getParameter("id");
@@ -220,7 +220,7 @@ public class AddCarrinhoViewHelper implements IViewHelper {
 					
 						int txtqtd =  Integer.parseInt(request.getParameter("qtde"));
 						p.getUnidade().get(i).setQuantidade(txtqtd);
-						System.out.println(txtqtd);
+						System.out.println(" Quantidade: " + txtqtd);
 						break;
 					}
 				}
@@ -230,18 +230,18 @@ public class AddCarrinhoViewHelper implements IViewHelper {
 			}
 			
 			if (resultado.getMsg() != null) {
-
+				System.out.println("Não Nulo");
 				List<EntidadeDominio> ed = resultado.getEntidades();
 				Unidade unidade = (Unidade) ed.get(0);
 				p = mapaUsuarios.get(idUsuario);
 				Integer qtdeLivrosRestantes = unidade.getQuantidade();
-
+				System.out.println(qtdeLivrosRestantes);
 				for (int i = 0; i < p.getUnidade().size(); i++) {
 					Livro l = p.getUnidade().get(i).getLivro();
 					if (l.getId() == idLivro) {
 						if (operacao.equals("MUDAR") && qtdeLivrosRestantes == p.getUnidade().get(i).getQuantidade()) {
 							
-							Integer qtdeLivro = p.getUnidade().get(i).getQuantidade() - 1;
+							Integer qtdeLivro = p.getUnidade().get(i).getQuantidade();
 							p.getUnidade().get(i).setQuantidade(qtdeLivro);
 						} else {
 							p.getUnidade().get(i).setQuantidade(qtdeLivrosRestantes);

@@ -9,16 +9,17 @@ public class ValidaCarrinho implements IStrategy {
 
 	@Override
 	public String processar(EntidadeDominio entidade) {
-		
+		System.out.println("Entrei na regra de negooooooooooooooooocio");
 		Unidade itemCarrinho = (Unidade)entidade;
 		Livro l = itemCarrinho.getLivro();
-		System.out.println(l.getTitulo());
+		System.out.println("isso aqui esta"+l.getTitulo());
 		if(l.getQuantidade() == 0)
 		{
 			return " Item Indisponivel";
 		}
 		if(itemCarrinho.getQuantidade() >= l.getQuantidade())
 		{
+			System.out.println(" é maior que o estoque");
 			return "Não há mais livros disponíveis no estoque";
 		}
 		return null;
