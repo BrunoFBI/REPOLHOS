@@ -53,7 +53,6 @@ public class AddCarrinhoViewHelper implements IViewHelper {
 			System.out.println("estou aquiiiiii");
 			String txtId = request.getParameter("id");
 			int id = Integer.parseInt(txtId);
-
 			m.remove(id, m.get(id));
 			for(int i = 0; i < BookList.size(); i ++)
 			{
@@ -207,7 +206,6 @@ public class AddCarrinhoViewHelper implements IViewHelper {
 		if (operacao.equals("MUDAR")){
 			System.out.println("Entrei no Mudar");
 			Map<Integer, Pedido> mapaUsuarios = (HashMap<Integer, Pedido>) request.getSession().getAttribute("mapaUsuarios");
-		
 			String txtIdLivro = request.getParameter("id");
 			Integer idLivro = Integer.parseInt(txtIdLivro);
 			String txtIdUsuario = (String) request.getSession().getAttribute("userid");
@@ -235,17 +233,15 @@ public class AddCarrinhoViewHelper implements IViewHelper {
 				Unidade unidade = (Unidade) ed.get(0);
 				p = mapaUsuarios.get(idUsuario);
 				Integer qtdeLivrosRestantes = unidade.getQuantidade();
-				System.out.println(qtdeLivrosRestantes);
+				System.out.println("oia "+ qtdeLivrosRestantes);
 				for (int i = 0; i < p.getUnidade().size(); i++) {
 					Livro l = p.getUnidade().get(i).getLivro();
 					if (l.getId() == idLivro) {
-						if (operacao.equals("MUDAR") && qtdeLivrosRestantes == p.getUnidade().get(i).getQuantidade()) {
+						if (operacao.equals("MUDAR") && qtdeLivrosRestantes >= p.getUnidade().get(i).getQuantidade()) {
 							
 							Integer qtdeLivro = p.getUnidade().get(i).getQuantidade();
-							p.getUnidade().get(i).setQuantidade(qtdeLivro);
-						} else {
-							p.getUnidade().get(i).setQuantidade(qtdeLivrosRestantes);
-						}
+							p.getUnidade().get(i).setQuantidade(1);
+						} 
 
 						break;
 					}

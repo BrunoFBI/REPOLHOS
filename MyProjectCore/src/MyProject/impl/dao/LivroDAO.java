@@ -160,9 +160,7 @@ public class LivroDAO extends AbstractJdbcDAO {
 			pst = connection.prepareStatement(sql.toString());
 			ResultSet rs = pst.executeQuery();
 			List<EntidadeDominio> livros = new ArrayList<EntidadeDominio>();
-			System.out.println(sql.toString());
-			
-			
+	
 				while(rs.next()){
 					Livro l = new Livro();
 					l.setId(rs.getInt("ID_Livro"));
@@ -180,7 +178,6 @@ public class LivroDAO extends AbstractJdbcDAO {
 					l.setValor(rs.getDouble("valor"));
 					l.setQuantidade(rs.getInt("quantidade"));
 					livros.add(l);
-
 				}
 				return livros;
 			} catch (SQLException e) {

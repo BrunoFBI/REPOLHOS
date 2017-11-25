@@ -249,7 +249,7 @@ public class Fachada implements IFachada{
 			resultado.setMsg(msg);
 			if(resultado.getMsg() != null)
 			{	System.out.println("Melancia");
-				itemCarrinho.setQuantidade(itemCarrinho.getQuantidade());
+				itemCarrinho.setQuantidade(l.getQuantidade());
 			}			
 		}
 		return resultado;

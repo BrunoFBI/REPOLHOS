@@ -12,7 +12,8 @@ public class ValidaCarrinho implements IStrategy {
 		System.out.println("Entrei na regra de negooooooooooooooooocio");
 		Unidade itemCarrinho = (Unidade)entidade;
 		Livro l = itemCarrinho.getLivro();
-		System.out.println("isso aqui esta"+l.getTitulo());
+		System.out.println("isso aqui esta: "+l.getQuantidade());
+		System.out.println("isso aqui esta: "+ itemCarrinho.getQuantidade());
 		if(l.getQuantidade() == 0)
 		{
 			return " Item Indisponivel";
