@@ -1,4 +1,3 @@
-
 package MyProject.web.vh.impl;
 
 import java.io.IOException;
@@ -48,26 +47,7 @@ public class AddCarrinhoViewHelper implements IViewHelper {
 		
 		
 		//  Operação para remover itens no carrinho de acordo com a ID de uma txt "hidden"
-		/*if(m != null && operacao.equals("REMOVER"))
-		{
-			System.out.println("estou aquiiiiii");
-			String txtId = request.getParameter("id");
-			int id = Integer.parseInt(txtId);
-			m.remove(id, m.get(id));
-			for(int i = 0; i < BookList.size(); i ++)
-			{
-				if(BookList.get(i).getId() == id)
-				{
-					BookList.remove(i);
-					break;
-				}
-			}
-				request.getSession().setAttribute("livros", BookList);
-				request.getSession().setAttribute("mapCar", m);		
-				return new Unidade();
-		}
-		}*/
-		
+				
 		if(operacao.equals("MUDAR"))
 		{
 			System.out.println("Entrei no Mudar");
@@ -95,10 +75,10 @@ public class AddCarrinhoViewHelper implements IViewHelper {
 		
 		if(mapaUsuarios != null)
 		{
-			Unidade i = new Unidade();
-			i.setQuantidade(1);
-			i.setLivro(l);
-			return i;
+			Unidade u = new Unidade();
+			u.setQuantidade(1);
+			u.setLivro(l);
+			return u;
 		}
 		
 		return new Unidade();
@@ -256,8 +236,32 @@ public class AddCarrinhoViewHelper implements IViewHelper {
 			d = request.getRequestDispatcher("Carrinho.jsp");
 
 		}
+		
+		if (operacao.equals("REMOVER")) {
+			Map<Integer, Pedido> mapaUsuarios = (HashMap<Integer, Pedido>) request.getSession().getAttribute("mapaUsuarios");
+			String txtIdLivro = (String) request.getParameter("id");
+			Integer idLivro = Integer.parseInt(txtIdLivro);
+			String txtIdUsuario = (String) request.getSession().getAttribute("userid");
+			Integer idUsuario = Integer.parseInt(txtIdUsuario);
+			Pedido p = mapaUsuarios.get(idUsuario);
+
+			for (int i = 0; i < p.getUnidade().size(); i++) {
+				Livro l = p.getUnidade().get(i).getLivro();
+				if (l.getId() == idLivro) {
+					p.getUnidade().remove(i);
+					break;
+				}
+			}
+
+			mapaUsuarios.replace(idUsuario, p);
+			request.getSession().setAttribute("mapaUsuarios", mapaUsuarios);
+			request.getSession().setAttribute("resultadoLivro", resultado);
+			d = request.getRequestDispatcher("Carrinho.jsp");
+
+		}
+
 		d.forward(request, response);
+
 	}
-	
-	
+
 }

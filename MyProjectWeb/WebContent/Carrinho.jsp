@@ -131,7 +131,7 @@ String usuario = (String) request.getSession().getAttribute("username");
                             sb.append("</div></td>");
                          // Pega titulo do livro na lista
                             sb.append("<td data-th='Quantity'>");
-                            sb.append("<input type='number' class='form-control' value='" + uni.getQuantidade() + "' id='numerim' onchange='Redirecionar(this.value,"+ l.getId()+")'>");
+                            sb.append("<input type='number' max='"+ l.getQuantidade() + "' min='1' class='form-control' value='" + uni.getQuantidade() + "' id='numerim' onchange='Redirecionar(this.value,"+ l.getId()+")'>");
                          // input qye chama a função de redirecionamento cada vez que é alterada   
                             sb.append("</td>");
                             sb.append("</td>");
