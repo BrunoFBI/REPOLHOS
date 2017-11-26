@@ -217,10 +217,10 @@ public class AddCarrinhoViewHelper implements IViewHelper {
 				for (int i = 0; i < p.getUnidade().size(); i++) {
 					Livro l = p.getUnidade().get(i).getLivro();
 					if (l.getId() == idLivro) {
-						if (operacao.equals("MUDAR") && qtdeLivrosRestantes >= p.getUnidade().get(i).getQuantidade()) {
+						if (operacao.equals("MUDAR") && qtdeLivrosRestantes > p.getUnidade().get(i).getQuantidade()) {
 							
 							Integer qtdeLivro = p.getUnidade().get(i).getQuantidade();
-							p.getUnidade().get(i).setQuantidade(1);
+							p.getUnidade().get(i).setQuantidade(qtdeLivro);
 						} 
 
 						break;

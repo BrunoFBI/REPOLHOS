@@ -18,7 +18,7 @@ public class ValidaCarrinho implements IStrategy {
 		{
 			return " Item Indisponivel";
 		}
-		if(itemCarrinho.getQuantidade() >= l.getQuantidade())
+		if(itemCarrinho.getQuantidade() > l.getQuantidade())
 		{
 			System.out.println(" é maior que o estoque");
 			return "Não há mais livros disponíveis no estoque";

@@ -82,7 +82,7 @@ String usuario = (String) request.getSession().getAttribute("username");
 	<div class="container">
     <div class="row">
         <div class="col-sm-12 col-md-10 col-md-offset-1">
-            <table class="table table-hover">
+            <table class="table table-striped table-dark"">
                 <thead>
                     <tr>
                         <th>Produto</th>
@@ -96,8 +96,7 @@ String usuario = (String) request.getSession().getAttribute("username");
 										}else
 											out.print(res.getMsg());
 									}
-									System.out.println("To nulo kkkkkk: "+ res.getMsg());
-								%>
+						%>
                     </tr>
                 </thead>
                <%
@@ -105,6 +104,8 @@ String usuario = (String) request.getSession().getAttribute("username");
 				double desconto = 0;
 				double precoTotal = 0;
 				double precoFrete = 0;
+				double totalzao = 0;
+				double fullPrice = 0;
 				if (map != null) {
 					String txtId = (String) request.getSession().getAttribute("userid");
 					int id = Integer.parseInt(txtId);
@@ -118,7 +119,6 @@ String usuario = (String) request.getSession().getAttribute("username");
 							sb.setLength(0);
 							Unidade uni = unidade.get(i);
 							Livro l = uni.getLivro();
-               			
 							sb.append("<tbody>");
                             sb.append("<tr>");
                             sb.append("<td class='col-sm-8 col-md-6'>");
@@ -148,24 +148,33 @@ String usuario = (String) request.getSession().getAttribute("username");
                             sb.append("</td>"); 
                             sb.append("</tr>");       
                             sb.append("</tbody>");
+                            totalzao = l.getValor() * uni.getQuantidade();
+                            precoTotal = totalzao + precoTotal;
+                            fullPrice  = precoTotal;
+                            precoFrete  = (unidade.get(i).getLivro().getId() * 9) / 2; 
                             out.print(sb.toString());
-						}
-               	
-						request.getSession().setAttribute("mapaCarrinho", map);
+                            
+						} 
+						request.getSession().setAttribute("mapaCarrinho", map);   
+						precoFrete ++; 
 						precoTotal = precoTotal + precoFrete;
-               
+               			
 					}
 				}
                %>
+
                 <tfoot>
                     <tr>
-                        <td><h5>Total<br>Frete</h5><h3>Total</h3></td>
-                        <td class="text-right"><h5><strong>$24.59<br>$6.94</strong></h5><h3>$31.53</h3></td>
+                        <td><h5>Total<br>Frete</h5><h3>Final</h3></td>
+                        <td class="text-right"><h5><strong><% out.print(fullPrice);%><br><% out.print(precoFrete);%></strong></h5><h3><% out.print(precoTotal); %></h3></td>
                     </tr>
                     <tr>
-                        <td>   </td>
-                        <td>   </td>
-                        <td>   </td>
+                         <td>
+                        <button type="button" class="btn btn-success">
+                            TEM CUPOM? <span class="glyphicon glyphicon-play"></span>
+                        </button></td>
+                        <td>   </td> 
+                        <td>   </td> 
                         <td>
                         <a href="http://localhost:8080/MyProjectWeb/Index.jsp" type="button" class="btn btn-default">
                          Continuar Comprando
@@ -175,6 +184,7 @@ String usuario = (String) request.getSession().getAttribute("username");
                         <button type="button" class="btn btn-success">
                             Finalizar <span class="glyphicon glyphicon-play"></span>
                         </button></td>
+                       
                     </tr>
                 </tfoot>
             </table>
