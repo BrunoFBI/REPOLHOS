@@ -169,10 +169,12 @@ String usuario = (String) request.getSession().getAttribute("username");
                         <td class="text-right"><h5><strong><% out.print(fullPrice);%><br><% out.print(precoFrete);%></strong></h5><h3><% out.print(precoTotal); %></h3></td>
                     </tr>
                     <tr>
-                         <td>
-                        <button type="button" class="btn btn-success">
-                            TEM CUPOM? <span class="glyphicon glyphicon-play"></span>
-                        </button></td>
+                    	<form action="Cupom" method="post">
+	                         <td>
+	                           <input  type="submit" id="operacao" name="operacao" value="CUPOM" class="btn btn-success"/></td>
+                        	</td>
+                        </form>
+                        
                         <td>   </td> 
                         <td>   </td> 
                         <td>

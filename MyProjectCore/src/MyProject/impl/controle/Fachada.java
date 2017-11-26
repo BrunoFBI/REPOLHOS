@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import MyProject.impl.dao.ClienteDAO;
+import MyProject.impl.dao.CupomDAO;
 import MyProject.impl.dao.EnderecoDAO;
 import MyProject.impl.dao.LivroDAO;
 import MyProjectCore.IDAO;
@@ -15,6 +16,7 @@ import MyProjectCore.IStrategy;
 import MyProjectCore.aplicacao.Resultado;
 import MyProjectCore.impl.negocio.ValidaCarrinho;
 import MyProjectDominio.Cliente;
+import MyProjectDominio.Cupom;
 import MyProjectDominio.Endereco;
 import MyProjectDominio.EntidadeDominio;
 import MyProjectDominio.Livro;
@@ -47,13 +49,13 @@ public class Fachada implements IFachada{
 		LivroDAO LivDao = new LivroDAO();
 		ClienteDAO cliDao = new ClienteDAO();
 		EnderecoDAO endDao = new EnderecoDAO();
-		
+		CupomDAO cupDao = new CupomDAO();
 		/* Adicionando cada dao no MAP indexando pelo nome da classe */
 		
 		daos.put(Livro.class.getName(), LivDao);
 		daos.put(Cliente.class.getName(), cliDao);
 		daos.put(Endereco.class.getName(), endDao);
-		
+		daos.put(Cupom.class.getName(),cupDao);
 		//Criando instâncias de regras de negócio a serem utilizados	
 		
 		//vrDadosObrigatoriosLivro vrDadosObrigatorioLivro = new vrDadosObrigatoriosLivro();

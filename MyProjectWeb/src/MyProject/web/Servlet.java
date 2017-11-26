@@ -19,6 +19,7 @@ import MyProject.web.command.impl.VisualizarCommand;
 import MyProject.web.vh.IViewHelper;
 import MyProject.web.vh.impl.AddCarrinhoViewHelper;
 import MyProject.web.vh.impl.ClienteViewHelper;
+import MyProject.web.vh.impl.CupomViewHelper;
 import MyProject.web.vh.impl.EnderecoViewHelper;
 import MyProject.web.vh.impl.LivroViewHelper;
 import MyProjectCore.aplicacao.Resultado;
@@ -66,6 +67,8 @@ public class Servlet extends HttpServlet {
     	vhs.put("/MyProjectWeb/SalvarCarrinho", new AddCarrinhoViewHelper());
     	vhs.put("/MyProjectWeb/PaginaLivro", new LivroViewHelper());
     	vhs.put("/MyProjectWeb/SalvarCarrinho", new AddCarrinhoViewHelper());
+    	vhs.put("/MyProjectWeb/SalvarCupom", new CupomViewHelper());
+    	
     }
     
     
