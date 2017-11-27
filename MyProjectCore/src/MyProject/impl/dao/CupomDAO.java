@@ -22,7 +22,7 @@ public class CupomDAO extends AbstractJdbcDAO {
 		
 		PreparedStatement pst = null;
 		openConnection();
-		Cupom cupom = new Cupom();
+		Cupom cupom = (Cupom) entidade;
 		StringBuilder sql = new StringBuilder();
 		sql.append("INSERT INTO cupom_desconto (num_cupom, valor)" + 
 				"    VALUES (?, ?);");
@@ -59,7 +59,7 @@ public class CupomDAO extends AbstractJdbcDAO {
 				"SELECT * from cupom_desconto");
 		sql.append(" WHERE 1=1 ");
 		if (cupom.getId() != null && cupom.getId() > 0) {
-			sql.append(" AND a.id_cupom = '" + cupom.getId() + "'" );
+			sql.append(" AND id_cupom = '" + cupom.getId() + "'" );
 		}
 
 		try {

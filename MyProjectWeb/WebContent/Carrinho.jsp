@@ -23,7 +23,9 @@
 <body>
 
 <%
-String stringId = (String) request.getSession().getAttribute("usuarioID");
+String stringId = (String) request.getSession().getAttribute("usuerid");
+Cupom cup = (Cupom) request.getSession().getAttribute("cupom");
+
 if (stringId != null) {
 	if (!stringId.trim().equals("0")) {
 		if (request.getSession().getAttribute("usuariodeslogado") != null) {
@@ -155,10 +157,18 @@ String usuario = (String) request.getSession().getAttribute("username");
                             out.print(sb.toString());
                             
 						} 
+						
+						
+						
 						request.getSession().setAttribute("mapaCarrinho", map);   
 						precoFrete ++; 
 						precoTotal = precoTotal + precoFrete;
-               			
+						
+						if(cup != null){
+							double cupo = cup.getDesconto();
+							precoTotal = precoTotal - cupo;
+							
+						}	
 					}
 				}
                %>
@@ -168,25 +178,30 @@ String usuario = (String) request.getSession().getAttribute("username");
                         <td><h5>Total<br>Frete</h5><h3>Final</h3></td>
                         <td class="text-right"><h5><strong><% out.print(fullPrice);%><br><% out.print(precoFrete);%></strong></h5><h3><% out.print(precoTotal); %></h3></td>
                     </tr>
-                    <tr>
-                    	<form action="Cupom" method="post">
+                    <tr>               	
+                    	<form action="SalvarCupom" method="post">
 	                         <td>
-	                           <input  type="submit" id="operacao" name="operacao" value="CUPOM" class="btn btn-success"/></td>
+	                           <input  type="submit" id="operacao" name="operacao" value="CUPONIZAR" class="btn btn-success"/></td>
+                        	</td>
+                        	<td>
+                        		<input type="text" id="txtCupom" name="txtCupom" style="margin-right: 30px">
                         	</td>
                         </form>
                         
-                        <td>   </td> 
-                        <td>   </td> 
+                        <td></td>                       
                         <td>
                         <a href="http://localhost:8080/MyProjectWeb/Index.jsp" type="button" class="btn btn-default">
                          Continuar Comprando
                         </a>
                         </td>
-                        <td>
-                        <button type="button" class="btn btn-success">
+                        <td><button type="button" class="btn btn-success">
                             Finalizar <span class="glyphicon glyphicon-play"></span>
-                        </button></td>
-                       
+                        </button></td></td> 
+                         <td></td> 
+                        <td>
+                        
+                       <td></td> 
+                         <td></td> 
                     </tr>
                 </tfoot>
             </table>
