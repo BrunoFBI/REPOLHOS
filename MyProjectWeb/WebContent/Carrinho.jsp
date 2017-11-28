@@ -90,14 +90,14 @@ String usuario = (String) request.getSession().getAttribute("username");
               	{
               		StringBuilder sb = new StringBuilder();
               		sb.append("<li class='nav-item'>");
-              		sb.append(" <a class='nav-link' href='#'>");
+              		sb.append(" <a class='nav-link' href='http://localhost:8080/MyProjectWeb/Login.jsp'>");
               		sb.append("Login");
               		 out.print(sb.toString());
               	}
               	else{
               		StringBuilder sb = new StringBuilder();
               		sb.append("<li class='nav-item'>");
-              		sb.append(" <a class='nav-link' href='#'>");
+              		sb.append(" <a class='nav-link' href='DeslogarCliente?operacao=DESLOGAR'>");
               		sb.append("Logout");
               		 out.print(sb.toString());
               	}

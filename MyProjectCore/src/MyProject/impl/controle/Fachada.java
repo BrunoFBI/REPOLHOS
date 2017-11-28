@@ -224,6 +224,12 @@ public class Fachada implements IFachada{
 
 	}
 	
+	public Resultado deslogar(EntidadeDominio entidade) {
+		resultado = new Resultado();	
+		return resultado;
+
+	}
+	
 	public Resultado comprar(EntidadeDominio entidade) {;
 		
 		Resultado resultado = new Resultado();

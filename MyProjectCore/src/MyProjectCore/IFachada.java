@@ -10,6 +10,7 @@ public interface IFachada {
 		public Resultado consultar(EntidadeDominio entidade);
 		public Resultado visualizar(EntidadeDominio entidade);
 		public Resultado comprar(EntidadeDominio entidade);
+		public Resultado deslogar(EntidadeDominio entidade);
 	}
 
 

@@ -13,6 +13,7 @@ import MyProject.web.command.ICommand;
 import MyProject.web.command.impl.AlterarCommand;
 import MyProject.web.command.impl.ComprarCommand;
 import MyProject.web.command.impl.ConsultarCommand;
+import MyProject.web.command.impl.DeslogarCommand;
 import MyProject.web.command.impl.ExcluirCommand;
 import MyProject.web.command.impl.SalvarCommand;
 import MyProject.web.command.impl.VisualizarCommand;
@@ -56,6 +57,7 @@ public class Servlet extends HttpServlet {
     	commands.put("BUSCAR", new  ConsultarCommand());
     	commands.put("CUPONIZAR", new ConsultarCommand());
     	commands.put("LOGAR", new ConsultarCommand()); 
+    	commands.put("DESLOGAR", new DeslogarCommand());
     	/* Utilizando o ViewHelper para tratar especificações de qualquer tela e indexando 
     	 * cada viewhelper pela url em que esta servlet é chamada no form
     	 * garantimos que esta servelt atenderá qualquer entidade */
@@ -72,6 +74,7 @@ public class Servlet extends HttpServlet {
     	vhs.put("/MyProjectWeb/SalvarCarrinho", new AddCarrinhoViewHelper());
     	vhs.put("/MyProjectWeb/SalvarCupom", new CupomViewHelper());
     	vhs.put("/MyProjectWeb/ClienteLogin", new ClienteViewHelper());
+    	vhs.put("/MyProjectWeb/DeslogarCliente", new ClienteViewHelper());
     }
     
     

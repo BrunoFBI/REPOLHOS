@@ -26,7 +26,7 @@ public class ClienteViewHelper implements IViewHelper {
 	public EntidadeDominio getEntidade(HttpServletRequest request) {
 		String operacao = request.getParameter("operacao");
 		Cliente cliente = null;
-
+		 RequestDispatcher d = null;
 		if(operacao.equals("LOGAR")) {
 			String email = request.getParameter("txtEmail");
 			Cliente c = new Cliente();
@@ -35,7 +35,6 @@ public class ClienteViewHelper implements IViewHelper {
 			return c;
 			
 		}
-		
 		
 		if(!operacao.equals("VISUALIZAR"))
 		{
@@ -139,6 +138,12 @@ public class ClienteViewHelper implements IViewHelper {
 				request.getSession().setAttribute("resultado", resultado);
 				d = request.getRequestDispatcher("ConsultarCliente.jsp");
 			}
+		}
+		
+		if(operacao.equals("DESLOGAR")) {
+			request.getSession().removeAttribute("usuario");
+			request.getSession().removeAttribute("mapaUsuarios");
+			d = request.getRequestDispatcher("Login.jsp");
 		}
 
 		if (operacao.equals("LOGAR")) {
