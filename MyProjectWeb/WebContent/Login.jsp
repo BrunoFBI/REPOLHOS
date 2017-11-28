@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page
+	import="MyProjectCore.aplicacao.Resultado, MyProjectDominio.*, java.util.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -83,13 +85,8 @@
 #conteudo {
     margin: 0 auto;
 }
-
-
-
-
-
-
 </style>
+
 <title>Login</title>
 </head>
 <body>
@@ -100,14 +97,10 @@
             <div class="account-wall">
                 <img class="profile-img" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120"
                     alt="">
-                <form class="form-signin">
-                <input type="text" class="form-control" placeholder="Email" required autofocus>
-                <input type="password" class="form-control" placeholder="Senha" required>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">
-                   LOGAR</button>
-                <label class="checkbox pull-left">
-                    
-                </label>
+                <form class="form-signin" action="ClienteLogin" method="post">
+                <input type="text" class="form-control" id="txtEmail" name="txtEmail" placeholder="Email" required autofocus>
+                <input type="password" class="form-control" placeholder="Senha" id="txtSenha" name="txtSenha" required>
+                <input class="btn btn-lg btn-primary btn-block" type="submit" value="LOGAR" name="operacao" id="operacao"/>             
                 </form>
             </div>
             <a href="#" class="text-center new-account">Criar uma conta </a>

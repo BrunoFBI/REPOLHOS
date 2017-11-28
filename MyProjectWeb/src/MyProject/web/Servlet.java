@@ -55,6 +55,7 @@ public class Servlet extends HttpServlet {
     	commands.put("MUDAR", new  ComprarCommand());
     	commands.put("BUSCAR", new  ConsultarCommand());
     	commands.put("CUPONIZAR", new ConsultarCommand());
+    	commands.put("LOGAR", new ConsultarCommand()); 
     	/* Utilizando o ViewHelper para tratar especificações de qualquer tela e indexando 
     	 * cada viewhelper pela url em que esta servlet é chamada no form
     	 * garantimos que esta servelt atenderá qualquer entidade */
@@ -70,7 +71,7 @@ public class Servlet extends HttpServlet {
     	vhs.put("/MyProjectWeb/PaginaLivro", new LivroViewHelper());
     	vhs.put("/MyProjectWeb/SalvarCarrinho", new AddCarrinhoViewHelper());
     	vhs.put("/MyProjectWeb/SalvarCupom", new CupomViewHelper());
-    	
+    	vhs.put("/MyProjectWeb/ClienteLogin", new ClienteViewHelper());
     }
     
     

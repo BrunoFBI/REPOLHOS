@@ -24,13 +24,12 @@
   <body>
   		<%
   		Resultado resultado = (Resultado) session.getAttribute("resConsultaLivro");
-    		
+    	Cliente cli = (Cliente) session.getAttribute("usuario");	
   		if(resultado == null)
   		{
   			pageContext.forward("SalvarLivro?operacao=CONSULTARLIVRO");
   			return;
   		}
-  		
   		%>
 
     <!-- Navigation -->
@@ -69,7 +68,32 @@
 
         <div class="col-lg-3">
 
-          <h1 class="my-4">Hyper Books</h1>
+          <h1 class="my-4">
+<%
+			
+			if(cli != null){
+				GregorianCalendar calendar = new GregorianCalendar();
+				int hora = calendar.get(Calendar.HOUR_OF_DAY); 
+				if(hora < 6)
+				{
+					out.print("Boa Madruga, " + cli.getNome());
+				}
+				else if(hora < 12)
+				{
+					out.print("Bom Dia, " + cli.getNome());
+				}
+				else if(hora < 18)
+				{
+					out.print("Boa Tarde, " + cli.getNome());
+				}
+				else if(hora < 23)
+				{
+					out.print("Boa Noite, " + cli.getNome());
+				}
+				
+			}	
+		%>
+		</h1>
           <div>
             <a href="#" class="list-group-item">Terror</a>
             <a href="#" class="list-group-item">Comedia</a>
