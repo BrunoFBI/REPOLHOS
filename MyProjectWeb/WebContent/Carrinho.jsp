@@ -85,8 +85,24 @@ String usuario = (String) request.getSession().getAttribute("username");
             <li class="nav-item">
               <a class="nav-link" href="#">Serviços</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">login</a>
+              <%
+              	if(cli == null)
+              	{
+              		StringBuilder sb = new StringBuilder();
+              		sb.append("<li class='nav-item'>");
+              		sb.append(" <a class='nav-link' href='#'>");
+              		sb.append("Login");
+              		 out.print(sb.toString());
+              	}
+              	else{
+              		StringBuilder sb = new StringBuilder();
+              		sb.append("<li class='nav-item'>");
+              		sb.append(" <a class='nav-link' href='#'>");
+              		sb.append("Logout");
+              		 out.print(sb.toString());
+              	}
+              %>
+              </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="http://localhost:8080/MyProjectWeb/SalvarCarrinho">Carrinho</a>
