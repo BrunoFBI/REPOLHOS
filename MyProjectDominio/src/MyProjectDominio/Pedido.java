@@ -8,7 +8,20 @@ public class Pedido extends EntidadeDominio{
 	private String status;
 	private Cliente usuario;
 	private double precoTotal;
-	
+	private double precoFrete;
+	private double totalDesconto;
+	public double getTotalDesconto() {
+		return totalDesconto;
+	}
+	public void setTotalDesconto(double totalDesconto) {
+		this.totalDesconto = totalDesconto;
+	}
+	public double getPrecoFrete() {
+		return precoFrete;
+	}
+	public void setPrecoFrete(double precoFrete) {
+		this.precoFrete = precoFrete;
+	}
 	public double getPrecoTotal() {
 		return precoTotal;
 	}

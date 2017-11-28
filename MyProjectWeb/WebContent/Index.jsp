@@ -36,7 +36,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="#">HyperBook</a>
+        <a class="navbar-brand" href="#">HyperBooks</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -51,7 +51,7 @@
               <a class="nav-link" href="#">Sobre</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Carrinho</a>
+              <a class="nav-link" href="http://localhost:8080/MyProjectWeb/SalvarCarrinho">Carrinho</a>
               <i class="material-icons"></i>
             </li>
             <li class="nav-item">
@@ -70,10 +70,10 @@
         <div class="col-lg-3">
 
           <h1 class="my-4">Hyper Books</h1>
-          <div class="list-group">
-            <a href="#" class="list-group-item">Category 1</a>
-            <a href="#" class="list-group-item">Category 2</a>
-            <a href="#" class="list-group-item">Category 3</a>
+          <div>
+            <a href="#" class="list-group-item">Terror</a>
+            <a href="#" class="list-group-item">Comedia</a>
+            <a href="#" class="list-group-item">Tecnologia </a>
           </div>
 
         </div>
@@ -140,7 +140,9 @@
 					sbRegistro.append(l.getTitulo());
 					sbRegistro.append("</a>");	
 					sbRegistro.append("</h4>");
-					sbRegistro.append("<h5>$24.99</h5>");
+					sbRegistro.append("<h5>");
+					sbRegistro.append(l.getValor());	
+					sbRegistro.append("<h5>");
 					sbRegistro.append("<p class='card-text'></p>");
 					sbRegistro.append("</div>");
 					sbRegistro.append("</div>");

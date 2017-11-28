@@ -58,8 +58,6 @@ public class CupomViewHelper implements IViewHelper {
 			throws IOException, ServletException {
 
 		RequestDispatcher d = null;
-		request.getSession().setAttribute("resultado", null);
-		request.getSession().setAttribute("livro", resultado);
 
 		String operacao = request.getParameter("operacao");
 
