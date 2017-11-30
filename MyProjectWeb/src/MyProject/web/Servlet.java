@@ -15,6 +15,7 @@ import MyProject.web.command.impl.ComprarCommand;
 import MyProject.web.command.impl.ConsultarCommand;
 import MyProject.web.command.impl.DeslogarCommand;
 import MyProject.web.command.impl.ExcluirCommand;
+import MyProject.web.command.impl.FinalizarCommand;
 import MyProject.web.command.impl.SalvarCommand;
 import MyProject.web.command.impl.VisualizarCommand;
 import MyProject.web.vh.IViewHelper;
@@ -58,6 +59,7 @@ public class Servlet extends HttpServlet {
     	commands.put("CUPONIZAR", new ConsultarCommand());
     	commands.put("LOGAR", new ConsultarCommand()); 
     	commands.put("DESLOGAR", new DeslogarCommand());
+    	commands.put("FINALIZAR", new FinalizarCommand());
     	/* Utilizando o ViewHelper para tratar especificações de qualquer tela e indexando 
     	 * cada viewhelper pela url em que esta servlet é chamada no form
     	 * garantimos que esta servelt atenderá qualquer entidade */
@@ -75,6 +77,7 @@ public class Servlet extends HttpServlet {
     	vhs.put("/MyProjectWeb/SalvarCupom", new CupomViewHelper());
     	vhs.put("/MyProjectWeb/ClienteLogin", new ClienteViewHelper());
     	vhs.put("/MyProjectWeb/DeslogarCliente", new ClienteViewHelper());
+    	vhs.put("/MyProjectWeb/FinalizarCompra", new AddCarrinhoViewHelper());
     }
     
     
@@ -103,7 +106,7 @@ public class Servlet extends HttpServlet {
 	
 	protected void doProcessRequest(HttpServletRequest request, 
 			HttpServletResponse response) throws ServletException, IOException {
-	
+		System.out.println("Sou uma URL: "+ request.getRequestURL());
 		//Obtêm a uri que invocou esta servlet (O que foi definido no methdo do form html)
 		String uri = request.getRequestURI();
 		
@@ -131,7 +134,6 @@ public class Servlet extends HttpServlet {
 		 * o resultado para o usuário
 		 */
 		vh.setView(resultado, request, response);
-	
 	}
  
 }

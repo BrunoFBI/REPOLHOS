@@ -293,6 +293,15 @@ public class Fachada implements IFachada{
 			return null;
 	}
 
+
+
+
+	@Override
+	public Resultado finalizar(EntidadeDominio entidade) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 /////////////Cliente/////////////////////////// Cliente ////////////////////////////Cliente/////////////////////////////Cliente/////////////////////////
 	
 }

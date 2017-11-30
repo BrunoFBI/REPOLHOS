@@ -9,12 +9,20 @@ public class Pedido extends EntidadeDominio{
 	private Cliente usuario;
 	private double precoTotal;
 	private double precoFrete;
-	private double totalDesconto;
-	public double getTotalDesconto() {
-		return totalDesconto;
+	private double precoFinal;
+	private int   qtdItens;
+	
+	public int getQtdItens() {
+		return qtdItens;
 	}
-	public void setTotalDesconto(double totalDesconto) {
-		this.totalDesconto = totalDesconto;
+	public void setQtdItens(int qtdItens) {
+		this.qtdItens = qtdItens;
+	}
+	public double getPrecoFinal() {
+		return precoFinal;
+	}
+	public void setPrecoFinal(double precoFinal) {
+		this.precoFinal = precoFinal;
 	}
 	public double getPrecoFrete() {
 		return precoFrete;

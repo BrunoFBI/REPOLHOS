@@ -17,7 +17,13 @@
 	function Redirecionar(qtde,id){
 	window.location.href = "SalvarCarrinho?operacao=MUDAR&qtde=" + qtde + "&id=" + id;
 	document.getElementById("numerim").value = qtde;
-}	
+	}	
+</script>
+<script>
+	function PedirLogin(){
+		document.getElementById("iLogin").style.visibility='';
+
+	}
 </script>
 </head>
 <body>
@@ -86,7 +92,8 @@ String usuario = (String) request.getSession().getAttribute("username");
               <a class="nav-link" href="#">Serviços</a>
             </li>
               <%
-              	if(cli == null)
+              	
+              if(cli == null)
               	{
               		StringBuilder sb = new StringBuilder();
               		sb.append("<li class='nav-item'>");
@@ -146,9 +153,11 @@ String usuario = (String) request.getSession().getAttribute("username");
 					StringBuilder sb = new StringBuilder();
 					Pedido p = map.get(id);
 					unidade = p.getUnidade();
-					
+					p.setQtdItens(0);
 					if (unidade.size() != 0) {
 						for (int i = 0; i < unidade.size(); i++) {
+							p.setQtdItens(i + 1);
+							System.out.println(" Quantidade de itens: " + p.getQtdItens());
 							sb.setLength(0);
 							Unidade uni = unidade.get(i);
 							Livro l = uni.getLivro();
@@ -183,9 +192,10 @@ String usuario = (String) request.getSession().getAttribute("username");
                             sb.append("</tbody>");
                             totalzao = l.getValor() * uni.getQuantidade();
                             precoTotal = totalzao + precoTotal;
-                            precoFrete  = (unidade.get(i).getLivro().getId() * 9) / 2; 
+                            precoFrete  = (unidade.get(i).getLivro().getId() * 9) / 5;  
                             out.print(sb.toString());
                             /////////////////////////////////////////////////////////////////
+                            
                             						
 						} 
 							
@@ -200,18 +210,21 @@ String usuario = (String) request.getSession().getAttribute("username");
                  			//Map<Integer, Resultado> mapaResultado = (Map<Integer, Resultado>)request.getSession().getAttribute("mapaResultado");
                  			StringBuilder sb = new StringBuilder();
                  			Pedido p = map.get(id);
-                 			unidade = p.getUnidade();
-                 	    						p.setPrecoFrete(precoFrete);
-                 	    						p.setPrecoTotal(precoTotal + precoFrete);
-                 	    						p.setTotalDesconto(p.getPrecoTotal());
-                 	    						request.getSession().setAttribute("mapaCarrinho", map);   
-                 	    						 					
-                 	    						if(cup != null){
-                 	    							p.setTotalDesconto(p.getPrecoTotal() - cup.getDesconto());  
-                 	    							if(p.getTotalDesconto() < 0){
-                 	    								p.setTotalDesconto(0);
+                 			unidade = p.getUnidade();	       
+                 								p.setPrecoFrete(precoFrete);
+                 	    						p.setPrecoTotal(precoTotal);                	    						  
+                 	    						p.setPrecoFinal(precoFrete + precoTotal);					
+                	    						if(cup != null){ 
+                 	    							p.setPrecoFinal(precoFrete + precoTotal - cup.getDesconto());
+                 	    							if(p.getPrecoFinal() < 0){
+                 	    								p.setPrecoFinal(0);
                  	    							}
-                 	    						}	
+                 	    							System.out.println("Qtd itens fora do for:" + p.getQtdItens());
+                 	    							if(p.getQtdItens() == 0)
+                 	    							{ System.out.println("Removerei o cupom");
+                 	    								request.getSession().removeAttribute("cupom");		
+                 	    							}
+                 	    						}
                  	    						sb.append("<tfoot>");
                  	    			               sb.append(" <tr>"); 
                  	    			               sb.append(" <td><h5>Total<br>Frete</h5><h3>Final</h3></td>");
@@ -219,7 +232,7 @@ String usuario = (String) request.getSession().getAttribute("username");
                  	    			               sb.append(p.getPrecoTotal()+ "<br>");
                  	    			               sb.append(p.getPrecoFrete());  
                  	    			               sb.append("</strong></h5><h3>");
-                 	    			               sb.append(p.getTotalDesconto() + p.getPrecoFrete());
+                 	    			               sb.append(p.getPrecoFinal());
                  	    			               sb.append("</h3></td>");  
                  	    			              out.print(sb.toString());
                                 }
@@ -241,9 +254,28 @@ String usuario = (String) request.getSession().getAttribute("username");
                          Continuar Comprando
                         </a>
                         </td>
-                        <td><button type="button" class="btn btn-success">
-                            Finalizar <span class="glyphicon glyphicon-play"></span>
-                        </button></td></td> 
+                        <%
+              	
+              if(cli == null)
+              	{
+              		StringBuilder sb = new StringBuilder();
+              		sb.append("<td><button type='button' class='btn btn-success' id='finalizar' name='finalizar' onclick='PedirLogin();'>");
+              		sb.append("FINALIZAR");
+                    sb.append("</button>");
+                    out.print(sb.toString());
+              	}
+              	else{
+              		StringBuilder sb = new StringBuilder();
+              		sb.append("<form method='post' action='FinalizaCompras'>");
+                    sb.append("<td><button type='submit' class='btn btn-success' id='operacao' name='operacao' value='FINALIZAR'>");
+                    sb.append("FINALIZAR");
+                    sb.append("</button>");
+                	sb.append("</form>");
+                	out.print(sb.toString());
+              	}
+              %>
+                        
+                        </td></td> 
                          <td></td> 
                         <td>
                         
@@ -252,6 +284,9 @@ String usuario = (String) request.getSession().getAttribute("username");
                     </tr>
                 </tfoot>
             </table>
+            <div class="embed-responsive embed-responsive-16by9">
+			  <iframe class="embed-responsive-item" id="iLogin" name="iLogin" src="http://localhost:8080/MyProjectWeb/FakeLogin.jsp"  style= "visibility: hidden;"></iframe>
+			</div>
         </div>
     </div>
 </div>

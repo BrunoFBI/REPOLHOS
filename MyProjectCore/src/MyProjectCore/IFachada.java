@@ -11,6 +11,7 @@ public interface IFachada {
 		public Resultado visualizar(EntidadeDominio entidade);
 		public Resultado comprar(EntidadeDominio entidade);
 		public Resultado deslogar(EntidadeDominio entidade);
+		public Resultado finalizar(EntidadeDominio entidade);
 	}
 
 

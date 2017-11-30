@@ -151,6 +151,7 @@ public class ClienteViewHelper implements IViewHelper {
 			List<EntidadeDominio> entidades = resultado.getEntidades();
 			for (int i = 0; i < entidades.size(); i++) {
 				Cliente cli = (Cliente) entidades.get(i);
+				
 				if (request.getParameter("txtEmail").trim().equals(cli.getEmail()))
 
 				{
@@ -158,8 +159,18 @@ public class ClienteViewHelper implements IViewHelper {
 					HttpSession sessao = request.getSession();
 					sessao.setAttribute("usuario", cli);
 					request.getSession().setAttribute("resultadoLogin", resultado);
-					d = request.getRequestDispatcher("Index.jsp");
-					break;
+					 String nome = request.getParameter("local");
+					System.out.println("Eu sou o nome:" + nome);
+					if( nome != null) {
+						d = request.getRequestDispatcher("Carrinho.jsp");
+						d.include(request, response);
+						return;
+					}
+					else {
+						d = request.getRequestDispatcher("Index.jsp");
+						break;
+					}
+						
 				} else {
 					System.out.println(" entrei no else");
 					request.getSession().setAttribute("resultadoLogin", resultado);

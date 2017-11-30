@@ -48,9 +48,26 @@
             <li class="nav-item">
               <a class="nav-link" href="#">Serviços</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">login</a>
-            </li>
+            <%
+            Cliente cli = (Cliente) session.getAttribute("usuario");
+            		if(cli == null)
+              	{
+              		StringBuilder sb = new StringBuilder();
+              		sb.append("<li class='nav-item'>");
+              		sb.append(" <a class='nav-link' href='http://localhost:8080/MyProjectWeb/Login.jsp'>");
+              		sb.append("Login");
+              		 out.print(sb.toString());
+              	}
+              	else{
+              		StringBuilder sb = new StringBuilder();
+              		sb.append("<li class='nav-item'>");
+              		sb.append(" <a class='nav-link' href='DeslogarCliente?operacao=DESLOGAR'>");
+              		sb.append("Logout");
+              		 out.print(sb.toString());
+              	}
+              %>
+            </a>
+            
             <li class="nav-item">
               <a class="nav-link" href="#">Carrinho</a>
               

@@ -11,9 +11,9 @@ public class Conexao {
 		Connection conn = null;
 		Class.forName("com.mysql.jdbc.Driver");
 		System.out.println("Conectando ao banco");
-		String url ="jdbc:mysql://localhost/teste";
+		String url ="jdbc:mysql://localhost/myproject";
 		String user = "root";
-		String password = "oi";
+		String password = "123456";
 		conn = DriverManager.getConnection(url, user, password);
 		System.out.println("Conectado com Sucesso");
 		return conn;
