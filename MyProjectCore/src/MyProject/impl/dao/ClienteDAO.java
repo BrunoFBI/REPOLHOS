@@ -31,8 +31,8 @@ public class ClienteDAO extends AbstractJdbcDAO {
 		try {
 			connection.setAutoCommit(false);	
 			StringBuilder sql = new StringBuilder();
-			sql.append("INSERT INTO Clientes( Nome, Dt_nasc, Dt_Cadastro, CPF, Genero, Tipo_tel, Telefone, Email, senha, status, alterador) ");
-			sql.append("VALUES (?,?,sysdate(),?,?,?,?,?,?,?,?)");
+			sql.append("INSERT INTO Clientes( Nome, Dt_nasc, Dt_Cadastro, CPF, Genero, Tipo_tel, Telefone, Email, senha, status) ");
+			sql.append("VALUES (?,?,sysdate(),?,?,?,?,?,?,?)");
 					
 			pst = connection.prepareStatement(sql.toString());
 			pst.setString(1, cliente.getNome());
@@ -45,7 +45,6 @@ public class ClienteDAO extends AbstractJdbcDAO {
 			pst.setString(7, cliente.getEmail());
 			pst.setString(8, cliente.getSenha());
 			pst.setBoolean(9,cliente.getStatus());
-			pst.setString(10,JOptionPane.showInputDialog("Digite seu nome de Alterador/Cadastrador") );
 			pst.executeUpdate();			
 			connection.commit();
 		} catch (SQLException e) {
@@ -75,7 +74,7 @@ public class ClienteDAO extends AbstractJdbcDAO {
 		try {
 			connection.setAutoCommit(false);
 			StringBuilder sql = new StringBuilder();
-			sql.append("UPDATE Clientes SET Nome=?, Dt_nasc=?, CPF=?, Genero=?, Tipo_tel=?, Telefone=?, Email=?, senha=?, status=?, alterador=?");
+			sql.append("UPDATE Clientes SET Nome=?, Dt_nasc=?, CPF=?, Genero=?, Tipo_tel=?, Telefone=?, Email=?, senha=?, status=?,");
 			sql.append(" WHERE ID_Cliente=?");
 			
 			pst = connection.prepareStatement(sql.toString());
@@ -89,8 +88,7 @@ public class ClienteDAO extends AbstractJdbcDAO {
 			pst.setString(7, cliente.getEmail());
 			pst.setString(8, cliente.getSenha());
 			pst.setBoolean(9,cliente.getStatus());
-			pst.setString(10,cliente.getAlterador());
-			pst.setInt(11,cliente.getId());
+			pst.setInt(10,cliente.getId());
 			System.out.println(cliente.getNome());
 			pst.executeUpdate();			
 			connection.commit();

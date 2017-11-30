@@ -4,28 +4,31 @@ package MyProjectDominio;
 import java.util.Date;
 
 public class Cliente extends EntidadeDominio{
-	String genero;
-	String nome;
-	Date dt_nasc;
-	Date dt_Cadastro;
-	String cpf;
-	String tipo_tel;
-	String telefone;
-	String email;
-	String senha;
-	String Alterador;
+	private String genero;
+	private String nome;
+	private Date dt_nasc;
+	private Date dt_Cadastro;
+	private String cpf;
+	private String tipo_tel;
+	private String telefone;
+	private String email;
+	private String senha;
+	private String Alterador;
+	private Boolean Status;
 	public String getAlterador() {
 		return Alterador;
 	}
-	public void setAlterador(String alterador) {
-		Alterador = alterador;
+	public String getGenero() {
+		return genero;
 	}
-	boolean status;
-	public boolean getStatus() {
-		return status;
+	public void setGenero(String genero) {
+		this.genero = genero;
 	}
-	public void setStatus(boolean status) {
-		this.status = status;
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 	public Date getDt_nasc() {
 		return dt_nasc;
@@ -38,19 +41,6 @@ public class Cliente extends EntidadeDominio{
 	}
 	public void setDt_Cadastro(Date dt_Cadastro) {
 		this.dt_Cadastro = dt_Cadastro;
-	}
-	Endereco endereco;
-	public String getGenero() {
-		return genero;
-	}
-	public void setGenero(String genero) {
-		this.genero = genero;
-	}
-	public String getNome() {
-		return nome;
-	}
-	public void setNome(String nome) {
-		this.nome = nome;
 	}
 	public String getCpf() {
 		return cpf;
@@ -82,13 +72,14 @@ public class Cliente extends EntidadeDominio{
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	public Endereco getEndereco() {
-		return endereco;
+	public Boolean getStatus() {
+		return Status;
 	}
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
+	public void setStatus(Boolean status) {
+		Status = status;
 	}
-
-	
+	public void setAlterador(String alterador) {
+		Alterador = alterador;
+	}
 	
 }
