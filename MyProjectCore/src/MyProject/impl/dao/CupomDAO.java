@@ -1,5 +1,6 @@
 
 package MyProject.impl.dao;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,14 +25,16 @@ public class CupomDAO extends AbstractJdbcDAO {
 		openConnection();
 		Cupom cupom = (Cupom) entidade;
 		StringBuilder sql = new StringBuilder();
-		sql.append("INSERT INTO cupom_desconto (num_cupom, valor)" + 
-				"    VALUES (?, ?);");
+		sql.append("INSERT INTO cupom_desconto (num_cupom, valor, dtVal, tpCupom)" + 
+				"    VALUES (?, ?, ?, ?)");
 		try {
 			pst = connection.prepareStatement(sql.toString());
 			connection.setAutoCommit(false);
+			Date dtVali = new Date(cupom.getDtVal().getTime());
 			pst.setString(1, cupom.getSerial());
 			pst.setDouble(2, cupom.getDesconto());
-			
+			pst.setDate(3, dtVali);
+			pst.setBoolean(4, cupom.getTpCupom());
 			pst.executeUpdate();
 			connection.commit();
 		}catch(SQLException ex) {

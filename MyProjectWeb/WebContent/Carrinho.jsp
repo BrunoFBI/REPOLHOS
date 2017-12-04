@@ -21,7 +21,7 @@
 </script>
 <script>
 	function PedirLogin(){
-		document.getElementById("iLogin").style.visibility='';
+		document.getElementById("iLogin").style.display='';
 
 	}
 </script>
@@ -285,7 +285,7 @@ String usuario = (String) request.getSession().getAttribute("username");
                 </tfoot>
             </table>
             <div class="embed-responsive embed-responsive-16by9">
-			  <iframe class="embed-responsive-item" id="iLogin" name="iLogin" src="http://localhost:8080/MyProjectWeb/FakeLogin.jsp"  style= "visibility: hidden;"></iframe>
+			  <iframe class="embed-responsive-item" id="iLogin" name="iLogin" src="http://localhost:8080/MyProjectWeb/FakeLogin.jsp"  style= "display: none;"></iframe>
 			</div>
         </div>
     </div>

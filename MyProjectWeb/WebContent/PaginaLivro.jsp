@@ -78,32 +78,45 @@
     </nav>
 
     <!-- Page Content -->
-    <div   class="container" >
-
-
-        <div class="col-lg-9">
-
-          <div class="card mt-4">
-            <img class="card-img-top" src="https://www.mykemptvillenow.com/wp-content/uploads/2015/06/Books-900x641.jpg " alt="">
-            <div class="card-body">
-              <% 
-              	out.print(l.getTitulo());
-              %>
-					<h4>$99.99</h4>
-              <p class="card-text">Livro muito bacana com um monte de palavra pra voce ler com a galera e se divertir muito com essa turminha da pesada</p>
-        	  
-        	  <form action="SalvarCarrinho" method="post" align="center">
-        			<input  type="submit" id="operacao" name="operacao" value="COMPRAR" class="btn btn-primary"/>
-			  </form>
-          </div>
-          <!-- /.card -->
-
-        </div>
-        <!-- /.col-lg-9 -->
-
-      </div>
-
-    </div>
+    <div class="container" style="padding-top: 10%; padding-botton: 10%">
+		<div class="row">
+			<div class="col-md-6">
+				<img class="img-responsive"  src="https://images-submarino.b2w.io/produtos/01/00/item/123806/4/123806418_1GG.jpg" />
+				<br />
+			</div>
+			<div class="col-md-6">
+				<h2>
+					<%
+						out.print(l.getTitulo());
+					%>
+				</h2>
+				<br />
+				<p class="text-justify"></p>
+				<br>
+				<h4 class="text-xs-right">
+					Preço do Livro: <span style="color: #197BB5; font-size: 35px;">
+						<%
+							out.print("$" + l.getValor());
+						%>
+					</span>
+				</h4>
+				<br /> <br />
+				<form action="SalvarCarrinho" method="post" align="center">
+					<input type="submit" id="operacao" name="operacao" value="COMPRAR"class="btn btn-primary" />			
+				</form>
+				<%              
+					StringBuilder sb = new StringBuilder();
+                           sb.append("<input type='number' max='"+ l.getQuantidade() + "' min='1' class='form-control'  id='numerim' ");                                                
+                            out.print(sb.toString());                   
+               %>  			
+			</div>
+		
+		</div>
+			<br/> <br/>
+		</div>
+		</div>
+			<br/> <br/>
+		</div>
     <!-- /.container -->
 
     <!-- Footer -->

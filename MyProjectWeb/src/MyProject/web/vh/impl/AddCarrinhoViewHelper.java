@@ -152,7 +152,7 @@ public class AddCarrinhoViewHelper implements IViewHelper {
 				{
 					List<EntidadeDominio> e = resultado.getEntidades();  //pegando o resultado que retorna da fachada
 
-					Unidade unidade = (Unidade)e.get(0);//pega o único item que retornou da fachada
+					Unidade unidade = (Unidade)e.get(0); //pega o único item que retornou da fachada
 					Pedido p = mapaUsuarios.get(id); //pega o pedido que está associado com a id do usuário
 					
 					if(p == null)

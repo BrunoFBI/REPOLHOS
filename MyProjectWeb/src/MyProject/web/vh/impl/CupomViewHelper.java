@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import MyProject.web.vh.IViewHelper;
 import MyProjectCore.aplicacao.Resultado;
+import MyProjectCore.util.ConverteDatas;
 import MyProjectDominio.EntidadeDominio;
 import MyProjectDominio.Cupom;
 
@@ -26,17 +27,28 @@ public class CupomViewHelper implements IViewHelper {
 
 			String serial = request.getParameter("txtSerial");
 			String desconto = request.getParameter("txtDesconto");
+			String dtVal = request.getParameter("dtValidade");
 			System.out.println(serial);
 			System.out.println(desconto);
 
 			cupom = new Cupom();
 			cupom.setDesconto(Double.parseDouble(desconto));
 			cupom.setSerial(serial);
-
+			cupom.setDtVal(ConverteDatas.converteStringDate(dtVal));
 			if (id != null && !id.trim().equals("")) {
 				cupom.setId(Integer.parseInt(id));
 			}
+			try 
+			{
+				Boolean status = request.getParameter("tpCupom").equals("true") ? true : false;
+				cupom.setTpCupom(status);
+			}catch( Exception e) {
+				
+			}
+			
 			return cupom;
+			
+			
 		}
 		
 		if(operacao.equals("BUSCAR")) {
@@ -84,7 +96,6 @@ public class CupomViewHelper implements IViewHelper {
 						d = request.getRequestDispatcher("Carrinho.jsp");
 						break;
 					}else {
-						resultado.setMsg("Este cupon não esta registrado!");
 						request.getSession().setAttribute("resultadoCupom", resultado);
 						d = request.getRequestDispatcher("Carrinho.jsp");
 

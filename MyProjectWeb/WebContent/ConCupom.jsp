@@ -36,6 +36,8 @@
    <TR>
       <TH>Codigo</TH>
       <TH>Desconto</TH>
+      <TH>DataValide</TH>
+      <TH>Tipo cupom</TH>
    </TR>
    <form action="SalvarCupom" method="post" align="center">
 
@@ -57,17 +59,7 @@
 				
 			//	<a href="nome-do-lugar-a-ser-levado">descrição</a>
 				
-				sbRegistro.append("<TR ALIGN='CENTER'>");
-		
-				sbLink.append("<a href=SalvarCupom?");
-					sbLink.append("txtId=");
-					sbLink.append(c.getId());						
-					sbLink.append("&");
-					sbLink.append("operacao=");
-					sbLink.append("VISUALIZAR");
-				sbLink.append(">");
-				
-				
+				sbRegistro.append("<TR>");					
 				sbRegistro.append("<TD>");
 				sbRegistro.append(sbLink.toString());	
 				sbRegistro.append(c.getSerial());
@@ -77,6 +69,24 @@
 				sbRegistro.append("<TD>");
 				sbRegistro.append(sbLink.toString());				
 				sbRegistro.append(c.getDesconto());
+				sbRegistro.append("</a>");				
+				sbRegistro.append("</TD>");
+				
+				sbRegistro.append("<TD>");
+				sbRegistro.append(sbLink.toString());				
+				sbRegistro.append(c.getDtVal());
+				sbRegistro.append("</a>");				
+				sbRegistro.append("</TD>");
+				
+				sbRegistro.append("<TD>");
+				sbRegistro.append(sbLink.toString());				
+				if(c.getTpCupom() == true)
+				{
+					sbRegistro.append("Cupom de Desconto");		
+				}
+				else{
+					sbRegistro.append("Cupom de Troca");
+				}
 				sbRegistro.append("</a>");				
 				sbRegistro.append("</TD>");
 								

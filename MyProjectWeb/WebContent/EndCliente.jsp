@@ -12,134 +12,92 @@
 </head>
 <body>
 	<form action="SalvarEndereco" method="post" id="frmSalvarEndereco">
-			<table class="table table-bordered">
-				<tr><TH COLSPAN="2">Cadastro de endereço</TH></tr>
-				<tr>
-				<!-- <tr style="${empty cliente ? 'display:none' : ''}"> -->
-					<td>
-						ID
-					</td>
-					<td>
-						<input type="text" class="form-control" id="txtId" name="txtId" value="${empty cliente ? '' : cliente.getId()}"/>
-						<!-- <input type="text" class="form-control" id="txtId" name="txtId" value="${empty cliente ? '' : cliente.getId()}" readonly="readonly"/> -->
-					</td>
-				</tr>
-				<tr>
-				<!-- <tr style="${empty cliente ? 'display:none' : ''}"> -->
-					<td>
-						ID do cliente
-					</td>
-					<td>
-						<input type="text" class="form-control" id="txtIdCliente" name="txtIdCliente" value="${empty cliente ? '' : cliente.getId()}"/>
-						<!-- <input type="text" class="form-control" id="txtId" name="txtId" value="${empty cliente ? '' : cliente.getId()}" readonly="readonly"/> -->
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Tipo da residencia
-					</td>
-					<td>
-						<select id="ddlTipoResidencia" name="ddlTipoResidencia">
-							<option ${cliente.getTipoTelefone() == 'Casa' ? 'selected' : '' }>Casa</option>
-							<option ${cliente.getTipoTelefone() == 'Apartamento' ? 'selected' : '' }>Apartamento</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Tipo do logradouro
-					</td>
-					<td>
-						<select id="ddlTipoLogradouro" name="ddlTipoLogradouro">
-							<option ${cliente.getTipoTelefone() == 'Avenida' ? 'selected' : '' }>Residencial</option>
-							<option ${cliente.getTipoTelefone() == 'Rua' ? 'selected' : '' }>Celular</option>
-							<option ${cliente.getTipoTelefone() == 'Travessa' ? 'selected' : '' }>Empresarial</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Logradouro
-					</td>
-					<td>
-						<input type="text" class="form-control" id="txtLogradouro" name="txtLogradouro" value="${empty cliente ? '' : cliente.getId()}"/>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Preferencial
-					</td>
-					<td>
-						Ativo    <input type="radio" id="rdPreferencial" name="rdPreferencial" value="true" checked>
-					    Inativo    <input type="radio" id="rdPreferencial" name="rdPreferencial" value="false" ${cliente.getStatus() == false ? 'checked' : ''}>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Número
-					</td>
-					<td>
-						<input type="text"class="form-control" id="txtNumero" name="txtNumero" value="${empty cliente ? '' : cliente.getTelefone()}" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Bairro
-					</td>
-					<td>
-						<input type="text"class="form-control" id="txtBairro" name="txtBairro" value="${empty cliente ? '' : cliente.getEmail()}" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						CEP
-					</td>
-					<td>
-						<input type="text"class="form-control" id="txtCep" name="txtCep" value="${empty cliente ? '' : cliente.getSenha()}" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Estado
-					</td>
-					<td>
-						<input type="text"class="form-control" id="txtEstado" name="txtEstado" value="${empty cliente ? '' : cliente.getSenha()}" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Cidade
-					</td>
-					<td>
-						<input type="text"class="form-control" id="txtCidade" name="txtCidade" value="${empty cliente ? '' : cliente.getSenha()}" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						País
-					</td>
-					<td>
-						<input type="text" class="form-control"  id="txtPais" name="txtPais" value="${empty cliente ? '' : cliente.getDtnascFormatado()}" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Observação
-					</td>
-					<td>
-						<input type="text" class="form-control"  id="txtObservacao" name="txtObservacao" value="${empty cliente ? '' : cliente.getDtnascFormatado()}" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Responsavel
-					</td>
-					<td>
-						<input type="text" class="form-control"  id="txtResponsavel" name="txtResponsavel" value="${empty cliente ? '' : cliente.getDtnascFormatado()}" />
-					</td>
-				</tr>
-			</table>
-			<input type="submit" class="btn btn-primary" id="operacao" name="operacao" value="${empty cliente ? 'SALVAR' : 'ALTERAR'}" class="btn btn-default" />
+			<div class="row">
+        <div class="col-md-6 mb-3">
+            <label>Logradouro</label>
+            <input type="text" class="form-control" id="txtLogradouro" name="txtLogradouro"  required>
+        </div>
+
+        <div class="col-md-2 mb-2">
+            <label>Tipo Logradouro</label>
+            <select class="custom-select" style="width:189px;">                  
+                <option>Selecione</option>
+                <option>Casa</option>
+                <option>Apartamento</option>
+                <option>Sitio</option>
+            </select>
+        </div>
+        <div class="col-md-2 mb-2">
+            <label>Tipo Residencia</label>
+            <input type="text"class="form-control" id="txtTipoResidencia" name="txtTipoResidencia" required>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label>Bairro</label>
+            <input type="text"class="form-control" id="txtBairro" name="txtBairro" required>   
+        </div>       
+        <div class="col-md-2 mb-2">
+            <label>Estado</label>
+            <select class="custom-select"id="txtEstado" name="txtEstado">
+                    <option value="AC">Acre</option>
+                    <option value="AL">Alagoas</option>
+                    <option value="AP">Amapá</option>
+                    <option value="AM">Amazonas</option>
+                    <option value="BA">Bahia</option>
+                    <option value="CE">Ceará</option>
+                    <option value="DF">Distrito Federal</option>
+                    <option value="ES">Espírito Santo</option>
+                    <option value="GO">Goiás</option>
+                    <option value="MA">Maranhão</option>
+                    <option value="MT">Mato Grosso</option>
+                    <option value="MS">Mato Grosso do Sul</option>
+                    <option value="MG">Minas Gerais</option>
+                    <option value="PA">Pará</option>
+                    <option value="PB">Paraíba</option>
+                    <option value="PR">Paraná</option>
+                    <option value="PE">Pernambuco</option>
+                    <option value="PI">Piauí</option>
+                    <option value="RJ">Rio de Janeiro</option>
+                    <option value="RN">Rio Grande do Norte</option>
+                    <option value="RS">Rio Grande do Sul</option>
+                    <option value="RO">Rondônia</option>
+                    <option value="RR">Roraima</option>
+                    <option value="SC">Santa Catarina</option>
+                    <option value="SP">São Paulo</option>
+                    <option value="SE">Sergipe</option>
+                    <option value="TO">Tocantins</option>
+                </select>
+        </div>
+
+        <div class="col-md-2 mb-3">
+                <label>CEP</label>
+                <input type="text"class="form-control" id="txtCep" name="txtCep" required>
+            </div>
+           
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label>Cidade</label>
+            <input type="text"class="form-control" id="txtCidade" name="txtCidade" required>
+        </div>
+        <div class="col-md-2 mb-3">
+            <label>País</label>
+            <input  type="text" class="form-control"  id="txtPais" name="txtPais" style="width:190px" required>
+        </div>
+        <div class="col-md-2 mb-2">
+            <label>Número</label>
+            <input type="text"class="form-control" id="txtNumero" name="txtNumero" required>
+        </div>
+    </div>
+    <div class="row" style="margin-left: 345px;">
+        <div class="col-md-6 mb-3">
+            <label style=" margin-left: 130px;" >Observação</label>
+            <textarea  type="text" class="form-control"  id="txtObservacao" name="txtObservacao" ></textarea>
+       </div>
+		<input type="submit" class="btn btn-primary" style="height: 55px; margin-top: 34px "id="operacao" name="operacao" value="${empty cliente ? 'SALVAR' : 'ALTERAR'}" class="btn btn-default" />
+    </div>			
 		</form>
 </body>
 </html>

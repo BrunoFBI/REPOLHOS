@@ -23,16 +23,16 @@ public class EnderecoViewHelper implements IViewHelper {
 
 		if(!operacao.equals("VISUALIZAR"))
 		{
-			String tipo_res = request.getParameter("ddlTipoResidencia");
-			String tipo_log = request.getParameter("ddlTipoLogradouro");
-			String logradouro = request.getParameter("txtLogradouro");
-			String numero = request.getParameter("txtNumero");
-			String bairro = request.getParameter("txtBairro");
 			String cep = request.getParameter("txtCep");
 			String estado = request.getParameter("txtEstado");
 			String cidade = request.getParameter("txtCidade");
 			String pais = request.getParameter("txtPais");
 			String obs = request.getParameter("txtObservacao");
+			String tipo_res = request.getParameter("txtTipoResidencia");
+			String tipo_log = request.getParameter("txtLogradouro");
+			String logradouro = request.getParameter("txtLogradouro");
+			String numero = request.getParameter("txtNumero");
+			String bairro = request.getParameter("txtBairro");
 			String responsavel = request.getParameter("txtResponsavel");
 			endereco = new Endereco();
 			try {

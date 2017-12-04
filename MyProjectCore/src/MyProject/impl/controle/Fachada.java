@@ -15,6 +15,7 @@ import MyProjectCore.IFachada;
 import MyProjectCore.IStrategy;
 import MyProjectCore.aplicacao.Resultado;
 import MyProjectCore.impl.negocio.ValidaCarrinho;
+import MyProjectCore.impl.negocio.ValidaCupom;
 import MyProjectDominio.Cliente;
 import MyProjectDominio.Cupom;
 import MyProjectDominio.Endereco;
@@ -61,7 +62,7 @@ public class Fachada implements IFachada{
 		//vrDadosObrigatoriosLivro vrDadosObrigatorioLivro = new vrDadosObrigatoriosLivro();
 		
 		ValidaCarrinho QtdEstoque = new ValidaCarrinho();
-		
+		ValidaCupom	vCupom = new ValidaCupom();
 		
 		/* Criando uma lista para conter as regras de negócio de livros
 		 * quando a operação for salvar
@@ -70,10 +71,12 @@ public class Fachada implements IFachada{
 		List<IStrategy> rnsSalvarCliente = new ArrayList<IStrategy>();
 		List<IStrategy> rnsSalvarEndereco = new ArrayList<IStrategy>();
 		List<IStrategy> rnsValidarCarrinho = new ArrayList<IStrategy>();
+		List<IStrategy> rnsValidarCupom = new ArrayList<IStrategy>();
 		//Adicionando as regras a serem utilizadas na operação salvar do fornecedor
 		
 			//rnsSalvarLivro.add(vrDadosObrigatorioLivro);
 			rnsValidarCarrinho.add(QtdEstoque);
+			rnsValidarCupom.add(vCupom);
 		
 		/* Cria o mapa que poderá conter todas as listas de regras de negócio específica 
 		 * por operação  do fornecedor
@@ -82,6 +85,8 @@ public class Fachada implements IFachada{
 		Map<String, List<IStrategy>> rnsCliente = new HashMap<String, List<IStrategy>>();
 		Map<String, List<IStrategy>> rnsEndereco = new HashMap<String, List<IStrategy>>();
 		Map<String, List<IStrategy>> rnsCarrinho= new HashMap<String, List<IStrategy>>();
+		Map<String, List<IStrategy>> rnsCupom = new HashMap<String, List<IStrategy>>();
+		
 		/*
 		 * Adiciona a lista de regras na operação salvar no mapa do fornecedor (lista criada na linha 70)
 		 */
@@ -89,12 +94,14 @@ public class Fachada implements IFachada{
 		rnsCliente.put("SALVAR",rnsSalvarCliente);
 		rnsEndereco.put("SALVAR", rnsSalvarEndereco);
 		rnsCarrinho.put("COMPRAR", rnsValidarCarrinho);
+		rnsCupom.put("CUPONIZAR", rnsValidarCupom);
 		
 		// Adiciona o mapa(criado na linha 79) com as regras indexadas pelas operações no mapa geral indexado 
 		  //pelo nome da entidade
 		 
 		rns.put(Livro.class.getName(), rnsLivro);
 		rns.put(Unidade.class.getName(),rnsCarrinho);
+		rns.put(Cupom.class.getName(), rnsCupom);
 	}
 	
 	
@@ -192,10 +199,8 @@ public class Fachada implements IFachada{
 	public Resultado consultar(EntidadeDominio entidade) {
 		resultado = new Resultado();
 		String nmClasse = entidade.getClass().getName();	
-		
-		String msg = executarRegras(entidade, "EXCLUIR");
-		
-		
+		String msg = executarRegras(entidade, "CONSULTAR");
+
 		if(msg == null){
 			IDAO dao = daos.get(nmClasse);
 			try {
@@ -210,6 +215,13 @@ public class Fachada implements IFachada{
 			resultado.setMsg(msg);
 			
 		}
+		 msg = executarRegras(entidade, "CUPONIZAR");
+		 if(msg == null) {
+			 return resultado;
+		 }
+		 else {
+			 resultado.setMsg(msg);
+		 }
 		
 		return resultado;
 
@@ -269,11 +281,11 @@ public class Fachada implements IFachada{
 		StringBuilder msg = new StringBuilder();
 		
 		Map<String, List<IStrategy>> regrasOperacao = rns.get(nmClasse);
-		
+		System.out.println("tamo ae: "+ entidade.getClass().getName());
 		
 		if(regrasOperacao != null){
 			List<IStrategy> regras = regrasOperacao.get(operacao);
-			
+			 System.out.println("Eu executo Rgras: " + regras);	
 			if(regras != null){
 				for(IStrategy s: regras){			
 					String m = s.processar(entidade);			
