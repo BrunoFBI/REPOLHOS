@@ -1,6 +1,9 @@
 package MyProject.web.vh.impl;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,11 +21,13 @@ public class EnderecoViewHelper implements IViewHelper {
 	@Override
 	public EntidadeDominio getEntidade(HttpServletRequest request) {
 		
+		Cliente cu = (Cliente) request.getSession().getAttribute("usuario");	
 		String operacao = request.getParameter("operacao");
 		Endereco endereco = null;
-
+		
 		if(!operacao.equals("VISUALIZAR"))
 		{
+			
 			String cep = request.getParameter("txtCep");
 			String estado = request.getParameter("txtEstado");
 			String cidade = request.getParameter("txtCidade");
@@ -33,21 +38,10 @@ public class EnderecoViewHelper implements IViewHelper {
 			String logradouro = request.getParameter("txtLogradouro");
 			String numero = request.getParameter("txtNumero");
 			String bairro = request.getParameter("txtBairro");
-			String responsavel = request.getParameter("txtResponsavel");
 			endereco = new Endereco();
-			try {
-				int cli_id = Integer.parseInt(request.getParameter("txtIdCliente"));
-				endereco.setCli_id(cli_id);
-			}catch(Exception e){
-				
-			}
-			try 
-			{
-				Boolean pref = request.getParameter("rdPreferencial").equals("true") ? true : false;
-				endereco.setPref(pref);;
-			}catch( Exception e) {
-				
-			}		
+			
+			int id = cu.getId();
+			endereco.setCli_id(id);
 			endereco.setTipo_res(tipo_res);
 			endereco.setTipo_log(tipo_log);
 			endereco.setLogradouro(logradouro);
@@ -58,7 +52,8 @@ public class EnderecoViewHelper implements IViewHelper {
 			endereco.setCidade(cidade);
 			endereco.setPais(pais);
 			endereco.setObs(obs);
-			endereco.setResponsavel(responsavel);
+			
+		
 			return endereco;
 		}
 		else{

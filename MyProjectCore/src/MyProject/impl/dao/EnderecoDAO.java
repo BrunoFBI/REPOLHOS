@@ -24,8 +24,8 @@ public class EnderecoDAO extends AbstractJdbcDAO {
 			connection.setAutoCommit(false);
 			
 			StringBuilder sql = new StringBuilder();
-			sql.append("INSERT INTO Endereco(tipo_Residencia, tipo_Logradouro, logradouro, numero, bairro, CEP,cidade,estado, pais, obs) ");
-			sql.append("VALUES (?,?,?,?,?,?,?,?,?,?)");
+			sql.append("INSERT INTO Endereco(tipo_Residencia, tipo_Logradouro, logradouro, numero, bairro, CEP,cidade,estado, pais, obs, fk_cliente) ");
+			sql.append("VALUES (?,?,?,?,?,?,?,?,?,?,?)");
 					
 			pst = connection.prepareStatement(sql.toString());
 			pst.setString(1, endereco.getTipo_res());
@@ -38,6 +38,7 @@ public class EnderecoDAO extends AbstractJdbcDAO {
 			pst.setString(8, endereco.getEstado());
 			pst.setString(9, endereco.getPais());
 			pst.setString(10, endereco.getObs());
+			pst.setInt(11, endereco.getCli_id());
 			pst.executeUpdate();			
 			connection.commit();
 		} catch (SQLException e) {

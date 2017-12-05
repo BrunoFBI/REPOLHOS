@@ -91,15 +91,7 @@ public class ClienteViewHelper implements IViewHelper {
 		return cliente;				
 	}
 
-	/**
-	 * TODO Descrição do Método
-	 * 
-	 * @param request
-	 * @param response
-	 * @return
-	 * @see lesWeb.controle.web.vh.IViewHelper#setView(javax.servlet.http.HttpServletRequest,
-	 *      javax.servlet.http.HttpServletResponse)
-	 */
+	
 	public void setView(Resultado resultado, HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		RequestDispatcher d = null;
@@ -159,6 +151,7 @@ public class ClienteViewHelper implements IViewHelper {
 					System.out.println("entrei no if");
 					HttpSession sessao = request.getSession();
 					sessao.setAttribute("usuario", cli);
+					
 					request.getSession().setAttribute("resultadoLogin", resultado);
 					 String nome = request.getParameter("local");
 					System.out.println("Eu sou o nome:" + nome);
