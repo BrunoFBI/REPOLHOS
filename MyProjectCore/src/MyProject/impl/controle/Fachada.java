@@ -16,6 +16,7 @@ import MyProjectCore.IStrategy;
 import MyProjectCore.aplicacao.Resultado;
 import MyProjectCore.impl.negocio.ValidaCarrinho;
 import MyProjectCore.impl.negocio.ValidaCupom;
+import MyProjectCore.util.Autenticador;
 import MyProjectDominio.Cliente;
 import MyProjectDominio.Cupom;
 import MyProjectDominio.Endereco;
@@ -200,7 +201,6 @@ public class Fachada implements IFachada{
 		resultado = new Resultado();
 		String nmClasse = entidade.getClass().getName();	
 		String msg = executarRegras(entidade, "CONSULTAR");
-
 		if(msg == null){
 			IDAO dao = daos.get(nmClasse);
 			try {
@@ -215,14 +215,16 @@ public class Fachada implements IFachada{
 			resultado.setMsg(msg);
 			
 		}
-		 msg = executarRegras(entidade, "CUPONIZAR");
-		 if(msg == null) {
-			 return resultado;
-		 }
-		 else {
-			 resultado.setMsg(msg);
-		 }
 		
+		
+		
+		if (entidade instanceof Cupom) {
+			Autenticador.setEntidades(resultado.getEntidades());
+			msg = executarRegras(entidade, "CUPONIZAR");
+			resultado.setMsg(msg);
+		}
+			
+		 
 		return resultado;
 
 	}

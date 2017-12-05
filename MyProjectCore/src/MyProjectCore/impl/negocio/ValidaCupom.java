@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import MyProjectCore.IStrategy;
+import MyProjectCore.util.Autenticador;
 import MyProjectDominio.Cupom;
 import MyProjectDominio.EntidadeDominio;
 
@@ -11,10 +12,11 @@ public  class ValidaCupom implements IStrategy {
 
 	@Override
 	public String processar(EntidadeDominio entidade) {
-		Cupom c = (Cupom)entidade;
-		System.out.println(" sou o id e estou nulo" + c.getId());
+		Cupom cu = (Cupom) entidade;
+		Autenticador.setCupo(cu);
+		Cupom c = (Cupom) Autenticador.buscar();
 		
-			if(c.getSerial() == null)
+			if(c == null)
 			{
 				System.out.println("O Cupom digitado não consta em nossa base de dados");
 				return "O Cupom digitado não consta em nossa base de dados";
@@ -27,7 +29,9 @@ public  class ValidaCupom implements IStrategy {
 					
 			if(dtExp.before(dtHoje))
 			{
+				
 				System.out.println("O Cupom digitado expirou");	
+				
 				return "O cupom inserido esta expirado";
 			}		
 		

@@ -103,7 +103,7 @@
                 <input class="btn btn-lg btn-primary btn-block" type="submit" value="LOGAR" name="operacao" id="operacao"/>             
                 </form>
             </div>
-            <a href="#" class="text-center new-account">Criar uma conta </a>
+            <a href="http://localhost:8080/MyProjectWeb/ClienteForm.jsp" class="text-center new-account">Criar uma conta </a>
         </div>
     </div>
 </div>

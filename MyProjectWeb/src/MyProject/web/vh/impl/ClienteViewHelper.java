@@ -27,7 +27,8 @@ public class ClienteViewHelper implements IViewHelper {
 		String operacao = request.getParameter("operacao");
 		Cliente cliente = null;
 		 RequestDispatcher d = null;
-		if(operacao.equals("LOGAR")) {
+		
+		 if(operacao.equals("LOGAR")) {
 			String email = request.getParameter("txtEmail");
 			Cliente c = new Cliente();
 			System.out.println(email);

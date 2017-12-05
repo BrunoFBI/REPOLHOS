@@ -2,6 +2,7 @@ package MyProjectDominio;
 
 //import java.sql.Date;
 import java.util.Date;
+import java.util.List;
 
 public class Cliente extends EntidadeDominio{
 	private String genero;
@@ -13,11 +14,11 @@ public class Cliente extends EntidadeDominio{
 	private String telefone;
 	private String email;
 	private String senha;
-	private String Alterador;
 	private Boolean Status;
-	public String getAlterador() {
-		return Alterador;
-	}
+	private List<Pedido> pedido;
+	private List<Endereco> endereco;
+	private List<Cartao> cartao;
+	
 	public String getGenero() {
 		return genero;
 	}
@@ -78,8 +79,25 @@ public class Cliente extends EntidadeDominio{
 	public void setStatus(Boolean status) {
 		Status = status;
 	}
-	public void setAlterador(String alterador) {
-		Alterador = alterador;
+	public List<Pedido> getPedido() {
+		return pedido;
 	}
+	public void setPedido(List<Pedido> pedido) {
+		this.pedido = pedido;
+	}
+	public List<Endereco> getEndereco() {
+		return endereco;
+	}
+	public void setEndereco(List<Endereco> endereco) {
+		this.endereco = endereco;
+	}
+	public List<Cartao> getCartao() {
+		return cartao;
+	}
+	public void setCartao(List<Cartao> cartao) {
+		this.cartao = cartao;
+	}
+	
+	
 	
 }

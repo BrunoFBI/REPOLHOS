@@ -104,7 +104,7 @@
                  <input type="hidden" name="local" id="local" value="fakelogin"/>            
                 </form>
             </div>
-            <a href="#" class="text-center new-account">Criar uma conta </a>
+            <a href="http://localhost:8080/MyProjectWeb/ClienteForm.jsp" class="text-center new-account">Criar uma conta </a>
         </div>
     </div>
 </div>

@@ -17,14 +17,7 @@
 	<%
 		Resultado resultado = (Resultado) session.getAttribute("resultado");
 	%>
-
-	<%
 	
-	if(resultado !=null && resultado.getMsg() != null){
-		out.print(resultado.getMsg());
-	}
-	
-	%>
 	<BR>
 
 <TABLE class="table table-inverse">
