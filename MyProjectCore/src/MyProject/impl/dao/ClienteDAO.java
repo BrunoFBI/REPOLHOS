@@ -12,6 +12,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import MyProjectDominio.Cliente;
+import MyProjectDominio.Endereco;
 import MyProjectDominio.EntidadeDominio;
 import MyProjectDominio.Livro;
 
@@ -134,7 +135,27 @@ public class ClienteDAO extends AbstractJdbcDAO {
 					c.setTelefone(rs.getString("Telefone"));
 					c.setStatus(rs.getBoolean("status"));
 					c.setDt_Cadastro(rs.getDate("Dt_Cadastro"));
-					clientes.add(c);
+					
+					pst = connection.prepareStatement("SELECT * FROM endereco where fk_cliente = " + c.getId());					
+					ResultSet rse = pst.executeQuery();
+					List<Endereco> enderecos = new ArrayList<Endereco>();
+					while(rse.next()){
+						Endereco e = new Endereco();
+						e.setBairro("bairro");
+						e.setCep("CEP");
+						e.setCidade("cidade");
+						e.setEstado("estado");
+						e.setLogradouro("logradouro");
+						e.setNumero("numero");
+						e.setPais("pais");
+						e.setObs("obs");
+						e.setId(rse.getInt("ID_Endereco"));
+						e.setTipo_log("tipo_Logradouro");
+						e.setTipo_res("tipo_Residencia");
+						enderecos.add(e);						
+					}
+					c.setEndereco(enderecos);					
+					clientes.add(c);	
 
 				}
 				return clientes;

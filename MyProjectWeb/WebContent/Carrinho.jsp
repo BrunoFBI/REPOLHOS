@@ -36,6 +36,11 @@
 		document.getElementById("iLogin").style.display = '';
 
 	}
+	
+	function FrameEnd() {
+		document.getElementById("Iendereco").style.display = '';
+
+	}
 </script>
 </head>
 <body>
@@ -151,8 +156,7 @@
 						</tr>
 					</thead>
 					<%
-						double subTotal = 0;
-						;
+						double subTotal = 0;					
 						double precoTotal = 0;
 						double precoFrete = 0;
 						double totalzao = 0;
@@ -205,7 +209,7 @@
 									sb.append("</tbody>");
 									totalzao = l.getValor() * uni.getQuantidade();
 									precoTotal = totalzao + precoTotal;
-									precoFrete = (unidade.get(i).getLivro().getId() * 9) / 3;
+									precoFrete = (uni.getQuantidade() *12) + p.getQtdItens() ;
 									out.print(sb.toString());
 									/////////////////////////////////////////////////////////////////
 
@@ -296,7 +300,8 @@
 					</tfoot>
 				</table>
 				<% 
-						if(cup != null){
+					Cupom cupo = (Cupom) request.getSession().getAttribute("cupom");
+				if(cupo != null){
 					if (cupom.getMsg() == null) {
 								StringBuilder st = new StringBuilder();							
 								st.append("<div class='alert alert-success' role='alert'>");
@@ -314,27 +319,63 @@
 					}
 						
 						}
-						else if (cupom.getMsg() != null) {
-								StringBuilder st = new StringBuilder();							
-								st.append("<div class='alert alert-danger' role='alert'>");
-								st.append("<strong>OPS!</strong> Tem algo errado com seu Cupom!.");
-								st.append("</div>");	
-								out.print(st.toString());	
-						}
-						else{
-							StringBuilder st = new StringBuilder();
 						
-							st.append("<div class='alert alert-warning' role='alert'>");
-							st.append("<strong>Olá!</strong> Tem Cupom?, só colocar");
-							st.append("</div>");
-							out.print(st.toString());	
+					%>
+					<%
+						if(cli !=null){
+							if(cli.getEndereco().size() == 0)
+								{
+									System.out.println("Sou uma parte do endereco" + cli.getEndereco());
+									StringBuilder st  =  new StringBuilder();
+									 st.append(" <button class='btn btn-info' onclick='FrameEnd();'> Cadastre seu endereço para finalizar a compra </button>'" );
+									 out.print(st.toString());	
+								}
+							else{
+								StringBuilder st  =  new StringBuilder();
+								 st.append(" <input type='hidden'/>'" );
+								 out.print(st.toString());	
+							}
+							
 						}
 					%>
 				<div class="embed-responsive embed-responsive-16by9">
 					<iframe class="embed-responsive-item" id="iLogin" name="iLogin"
 						src="http://localhost:8080/MyProjectWeb/FakeLogin.jsp"
+						style="display: none; width:200px;"></iframe>
+						<iframe class="embed-responsive-item" id="Iendereco" name="Iendereco"
+						src="http://localhost:8080/MyProjectWeb/FakeEnd.jsp"
 						style="display: none;"></iframe>
 				</div>
+<!-- ----------------------------------------- AREA DE FINALIZAÇÃO DE COMPRAS------------------------------------------------->
+
+
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			</div>
 		</div>
 	</div>

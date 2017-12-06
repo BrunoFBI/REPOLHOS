@@ -97,7 +97,8 @@
             <textarea  type="text" class="form-control"  id="txtObservacao" name="txtObservacao" ></textarea>
        </div>
 		<input type="submit" class="btn btn-primary" style="height: 55px; margin-top: 34px "id="operacao" name="operacao" value="SALVAR" class="btn btn-default" />
-    </div>			
+    </div>	
+    	<input type="hidden" name="local" id="local" value="fakEnd"/> 		
 		</form>
 </body>
 </html>

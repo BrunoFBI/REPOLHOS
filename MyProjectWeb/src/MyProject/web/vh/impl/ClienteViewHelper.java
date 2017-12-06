@@ -157,7 +157,7 @@ public class ClienteViewHelper implements IViewHelper {
 					System.out.println("Eu sou o nome:" + nome);
 					if( nome != null) {
 						d = request.getRequestDispatcher("Carrinho.jsp");
-						d.include(request, response);
+						d.forward(request, response);
 						return;
 					}
 					else {

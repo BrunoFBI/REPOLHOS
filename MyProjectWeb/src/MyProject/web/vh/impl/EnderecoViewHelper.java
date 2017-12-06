@@ -15,6 +15,7 @@ import MyProjectCore.aplicacao.Resultado;
 import MyProjectDominio.Cliente;
 import MyProjectDominio.Endereco;
 import MyProjectDominio.EntidadeDominio;
+import jdk.nashorn.internal.ir.RuntimeNode.Request;
 
 public class EnderecoViewHelper implements IViewHelper {
 
@@ -53,6 +54,9 @@ public class EnderecoViewHelper implements IViewHelper {
 			endereco.setPais(pais);
 			endereco.setObs(obs);
 			
+			Cliente cli = (Cliente) request.getSession().getAttribute("usuario");
+			cli.getEndereco().add(endereco);
+			
 		
 			return endereco;
 		}
@@ -84,8 +88,17 @@ public class EnderecoViewHelper implements IViewHelper {
 			if(operacao.equals("SALVAR")){
 				resultado.setMsg("Endereço cadastrado com sucesso!");
 			}
-			
 			request.getSession().setAttribute("resultado", resultado);
+			 String nome = request.getParameter("local");
+				System.out.println("Eu sou o nome:" + nome);
+				if( nome != null) {
+					d = request.getRequestDispatcher("Carrinho.jsp");
+					d.forward(request, response);
+					return;
+				}
+				else {
+					d = request.getRequestDispatcher("Index.jsp");
+				}
 			d= request.getRequestDispatcher("ConsultarEndereco.jsp");  			
 		}
 		

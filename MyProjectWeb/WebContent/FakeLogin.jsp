@@ -97,7 +97,7 @@
             <div class="account-wall">
                 <img class="profile-img" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120"
                     alt="">
-                <form class="form-signin" action="ClienteLogin" method="post">
+                <form class="form-signin" action="ClienteLogin" method="post" target="_parent">
                 <input type="text" class="form-control" id="txtEmail" name="txtEmail" placeholder="Email" required autofocus>
                 <input type="password" class="form-control" placeholder="Senha" id="txtSenha" name="txtSenha" required>
                 <input class="btn btn-lg btn-primary btn-block" type="submit" value="LOGAR" name="operacao" id="operacao"/> 
