@@ -65,7 +65,13 @@
   <servlet-mapping>
     <servlet-name>Servlet</servlet-name>
     <url-pattern>/DeslogarCliente</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>Servlet</servlet-name>
+    <url-pattern>/FinalizaCompras</url-pattern>
   </servlet-mapping>    
+            
         
     
  

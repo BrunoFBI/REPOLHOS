@@ -229,6 +229,7 @@
 							p.setPrecoFrete(precoFrete);
 							p.setPrecoTotal(precoTotal);
 							p.setPrecoFinal(precoFrete + precoTotal);
+							
 							if (cup != null) {
 								if (cupom.getMsg() == null) {
 									p.setPrecoFinal(precoFrete + precoTotal - cup.getDesconto());
