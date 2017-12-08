@@ -30,6 +30,7 @@ public class FinalPedidoWiewHelper implements IViewHelper{
 		String txtId = (String) request.getSession().getAttribute("userid");
 		int id = Integer.parseInt(txtId);
 		System.out.println( "sou OP: " + id );
+		
 		if(operacao.equals("FINALIZAR")) {
 		Pedido p = map.get(id);
 		System.out.println( "sou OP" + p );
@@ -39,7 +40,7 @@ public class FinalPedidoWiewHelper implements IViewHelper{
 		System.out.println("Pedido:" + p.getDtPedido());
 		p.setStatus("EM PROCESSO");
 		System.out.println("Pedido:" + p.getStatus());
-		c.getPedido().add(p);
+		p.setIDusuario(c.getId());
 			return p;
 		}
 		

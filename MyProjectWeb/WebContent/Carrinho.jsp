@@ -167,6 +167,9 @@
 							//Map<Integer, Resultado> mapaResultado = (Map<Integer, Resultado>)request.getSession().getAttribute("mapaResultado");
 							StringBuilder sb = new StringBuilder();
 							Pedido p = map.get(id);
+							if( p == null){
+							 System.out.println(" PEDIDO NULO!!!!");
+							}
 							unidade = p.getUnidade();
 							p.setQtdItens(0);
 							if (unidade.size() != 0) {
@@ -225,6 +228,7 @@
 							//Map<Integer, Resultado> mapaResultado = (Map<Integer, Resultado>)request.getSession().getAttribute("mapaResultado");
 							StringBuilder sb = new StringBuilder();
 							Pedido p = map.get(id);
+							System.out.println("Sou uma ID: " + id);		
 							unidade = p.getUnidade();
 							p.setPrecoFrete(precoFrete);
 							p.setPrecoTotal(precoTotal);
@@ -331,6 +335,14 @@
 									 st.append(" <button class='btn btn-info' onclick='FrameEnd();'> Cadastre seu endereço para finalizar a compra </button>'" );
 									 out.print(st.toString());	
 								}
+								else if(cli.getEndereco().size() > 0)
+								{
+									System.out.println("Sou uma parte do endereco" + cli.getEndereco());
+									StringBuilder st  =  new StringBuilder();
+									 st.append(" <button class='btn btn-info' data-toggle='modal' data-target='#exampleModal' data-whatever=''@mdo'> Selecione o endereco de entrega </button>'" );
+									 out.print(st.toString());	
+								}
+							
 							else{
 								StringBuilder st  =  new StringBuilder();
 								 st.append(" <input type='hidden'/>'" );
@@ -347,34 +359,59 @@
 						src="http://localhost:8080/MyProjectWeb/FakeEnd.jsp"
 						style="display: none;"></iframe>
 				</div>
-<!-- ----------------------------------------- AREA DE FINALIZAÇÃO DE COMPRAS------------------------------------------------->
+<!-- ----------------------------------------- AREA DE FINALIZAÇÃO DE COMPRAS------------------------------------------------------------------------------------->
 
+ 
+ 
+ 
+ 
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" style="margin-left:18%" >Selecione o Endereço de entrega </h5>
+      </div>
+      <div class="modal-body">
+        <form>							
+		<table class="table table-striped table-dark table-responsive" style="width: 450px">
+		<tr>
+		<td><b> Nome do Livro</b></td>
+		<td><b> Valores</b></td>
+		<td><b> Preferencial</b></td>
+		</tr>
+            <%
+			if(cli != null)
+			{
+				StringBuilder st = new StringBuilder();
+				
+				for(int k = 0; k < cli.getEndereco().size(); k++){
+					st.append("<tr>");
+					st.append("<td><li>");
+					st.append(cli.getEndereco().get(k).getLogradouro());
+					st.append("</li></td>");			
+					st.append("<td>");
+					st.append(cli.getEndereco().get(k).getNumero());;	
+					st.append("</td>");
+					st.append("<td>");
+					st.append("<form method='post' action='EndEntrega'>");
+					st.append("<button type='submit' class='btn btn-primary btn-sm'  id='operacao' name='operacao' value='ENTREGAR'>Prefiro Esse</button>");
+					st.append("<input type='hidden' value=' "+ cli.getEndereco().get(k).getId() +"' >");
+					st.append("</form>");
+					st.append("</td>");	
+					st.append("</tr>");				
+			}								
+				st.append("</table>");	
+				st.append("</div>");
+				out.print(st.toString());
+			}								
+		%>	
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
 			
 			
 			</div>

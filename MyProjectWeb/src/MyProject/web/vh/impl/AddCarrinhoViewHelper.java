@@ -23,12 +23,18 @@ public class AddCarrinhoViewHelper implements IViewHelper {
 	@Override
 	public EntidadeDominio getEntidade(HttpServletRequest request) {
 		
-		request.getSession().setAttribute("userid", "0");
 		String stringId = (String)request.getSession().getAttribute("userid");
 		Livro l = (Livro) request.getSession().getAttribute("livro");
 		Map<Integer, Pedido> mapaUsuarios = (Map<Integer, Pedido>)request.getSession().getAttribute("mapaUsuarios");
 		Map<Integer, Resultado> mapaResultado = (Map<Integer, Resultado>)request.getSession().getAttribute("mapaResultado");
 		String operacao = (String)request.getParameter("operacao");		
+
+		if(stringId == null) {
+			request.getSession().setAttribute("userid", "0");
+			stringId = "0";
+
+		}
+
 			
 		if(mapaUsuarios == null)
 		{
@@ -92,6 +98,19 @@ public class AddCarrinhoViewHelper implements IViewHelper {
 		String operacao = request.getParameter("operacao");
 		request.getSession().removeAttribute("resultadoConsultaLivro");
 		String stringId = (String)request.getSession().getAttribute("userid");
+		
+		
+if (!stringId.trim().equals("0")) {
+			
+			if (request.getSession().getAttribute("usuariodeslogado") != null) {
+				Map<Integer, Pedido> mapaUsuarios = (Map<Integer, Pedido>) request.getSession().getAttribute("mapaUsuarios");
+				Pedido p = mapaUsuarios.get(0);
+				mapaUsuarios.put(Integer.parseInt(stringId), p);
+				request.getSession().removeAttribute("usuariodeslogado");
+				request.getSession().setAttribute("mapaUsuarios", mapaUsuarios);
+			}
+}
+		
 		
 		if (operacao.equals("REMOVER")){
 			System.out.println("Entrei no remover");
