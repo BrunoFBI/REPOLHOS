@@ -30,6 +30,7 @@ public class CartaoDAO extends AbstractJdbcDAO  {
 			pst.setString(2, c.getBandeira());
 			pst.setString(3, c.getValidade());
 			pst.setString(4, c.getCodigo());
+			System.out.println("Sou a id do cliente" + c.getID_Cliente() );
 			pst.setInt(5, c.getID_Cliente());
 
 			

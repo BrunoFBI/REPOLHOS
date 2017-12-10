@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,12 +15,14 @@ import MyProjectCore.aplicacao.Resultado;
 import MyProjectCore.util.ConverteDatas;
 import MyProjectDominio.Cartao;
 import MyProjectDominio.Cliente;
+import MyProjectDominio.Endereco;
 import MyProjectDominio.EntidadeDominio;
 
 public class CartaoViewHelper implements IViewHelper {
 
 	@Override
 	public EntidadeDominio getEntidade(HttpServletRequest request) {
+		Cliente cu = (Cliente) request.getSession().getAttribute("usuario");	
 		String operacao = request.getParameter("operacao");
 		Cartao cartao = null;
 
@@ -31,29 +34,20 @@ public class CartaoViewHelper implements IViewHelper {
 			String bandeira = request.getParameter("txtBandeira");
 			String validade = request.getParameter("txtValidade");
 			cartao = new Cartao();
-			try {
-				int id = Integer.parseInt(request.getParameter("txtId"));
-				cartao.setID_Cliente(id);
-			}catch(Exception e){
-				
-			}
 			
-			try 
-			{
-				Boolean preferencial = request.getParameter("rdStatus").equals("true") ? true : false;
-				cartao.setPreferencial(preferencial);
-			}catch( Exception e) {
-				
-			
-			}		
+			int id = cu.getId();
+			cartao.setID_Cliente(id);
 			cartao.setTitular(titular);
 			cartao.setCodigo(codigo);
 			cartao.setNumero(numero);
 			cartao.setBandeira(bandeira);
 			cartao.setValidade(validade);
+			
+			Cliente cli = (Cliente) request.getSession().getAttribute("usuario");
+			cli.getCartao().add(cartao);
 			return cartao;
 		}
-		else{
+else{
 			
 			HttpSession session = request.getSession();
 			Resultado resultado = (Resultado) session.getAttribute("resultado");
@@ -71,9 +65,27 @@ public class CartaoViewHelper implements IViewHelper {
 	@Override
 	public void setView(Resultado resultado, HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		// TODO Auto-generated method stub
+		RequestDispatcher d= null;
+		request.getSession().setAttribute("resultado", null);
+		request.getSession().setAttribute("cartao", null);
+		
+		String operacao = request.getParameter("operacao");
+		
+		if(resultado.getMsg() == null){
+			if(operacao.equals("CADASTRAR")){
+				resultado.setMsg("Cartão cadastrado com sucesso!");
+			}
+			request.getSession().setAttribute("resultado", resultado);
+					d = request.getRequestDispatcher("FinalPedido.jsp");
+					d.forward(request, response);
+					return;
+				}
+				else {
+					d = request.getRequestDispatcher("Index.jsp");
+				} 			
+		}
 		
 	}
 	
 
-}
+

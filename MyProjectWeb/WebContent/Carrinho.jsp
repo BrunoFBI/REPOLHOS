@@ -54,8 +54,16 @@
 <body>
 
 	<%
-		String stringId = (String) request.getSession().getAttribute("userid");
+		
 		Cupom cup = (Cupom) request.getSession().getAttribute("cupom");
+		Cliente c = (Cliente) request.getSession().getAttribute("usuario");
+		
+		String stringId = (String) request.getSession().getAttribute("userid");
+		
+		if (stringId == null) {
+			stringId = "0";
+		}
+		
 		if (stringId != null) {
 			if (!stringId.trim().equals("0")) {
 				if (request.getSession().getAttribute("usuariodeslogado") != null) {
@@ -73,29 +81,16 @@
 			response.sendRedirect("Carrinho.jsp");
 			return;
 		}
+		
 		request.getSession().setAttribute("redirecionar", null);
 		Map<Integer, Pedido> map = (Map<Integer, Pedido>) request.getSession().getAttribute("mapaUsuarios");
 		Resultado cupom = (Resultado) request.getSession().getAttribute("resultadoCupom");
 		Resultado res = (Resultado) request.getSession().getAttribute("resultadoLivro");
 		List<Unidade> unidade = new ArrayList<Unidade>();
-		String usuario = (String) request.getSession().getAttribute("username");
+		String usuario = (String) request.getSession().getAttribute("pedShow");
 	%>
 	<%
 		Cliente cli = (Cliente) session.getAttribute("usuario");
-		if (cli != null) {
-			GregorianCalendar calendar = new GregorianCalendar();
-			int hora = calendar.get(Calendar.HOUR_OF_DAY);
-			if (hora < 6) {
-				out.print("Boa Madruga, " + cli.getNome());
-			} else if (hora < 12) {
-				out.print("Bom Dia, " + cli.getNome());
-			} else if (hora < 18) {
-				out.print("Boa Tarde, " + cli.getNome());
-			} else if (hora < 23) {
-				out.print("Boa Noite, " + cli.getNome());
-			}
-
-		}
 	%>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 	<div class="container">
@@ -240,7 +235,6 @@
 							p.setPrecoFrete(precoFrete);
 							p.setPrecoTotal(precoTotal);
 							p.setPrecoFinal(precoFrete + precoTotal);
-							
 							if (cup != null) {
 								if (cupom.getMsg() == null) {
 									p.setPrecoFinal(precoFrete + precoTotal - cup.getDesconto());

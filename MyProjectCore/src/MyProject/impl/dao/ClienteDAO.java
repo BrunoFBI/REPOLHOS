@@ -11,10 +11,12 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import MyProjectDominio.Cartao;
 import MyProjectDominio.Cliente;
 import MyProjectDominio.Endereco;
 import MyProjectDominio.EntidadeDominio;
 import MyProjectDominio.Livro;
+import MyProjectDominio.Pedido;
 
 
 public class ClienteDAO extends AbstractJdbcDAO {
@@ -155,7 +157,42 @@ public class ClienteDAO extends AbstractJdbcDAO {
 						enderecos.add(e);						
 					}
 					c.setEndereco(enderecos);					
-					clientes.add(c);	
+					clientes.add(c);
+					
+					pst = connection.prepareStatement("SELECT * FROM cartao WHERE pk_cliente = " + c.getId());
+					ResultSet cartoesCliente = pst.executeQuery();
+					List<Cartao> cartoes = new ArrayList<Cartao>();
+					while(cartoesCliente.next())
+					{
+						Cartao cr = new Cartao();
+						
+						cr.setId(cartoesCliente.getInt("id_cartao"));
+						cr.setBandeira(cartoesCliente.getString("bandeira"));
+						cr.setNumero(cartoesCliente.getString("numero"));
+						cr.setCodigo(cartoesCliente.getString("codigo_seg"));
+						cr.setValidade(cartoesCliente.getString("dtVencimento"));
+						cr.setID_Cliente(cartoesCliente.getInt("pk_cliente"));
+						cartoes.add(cr);
+					}				
+					c.setCartao(cartoes);					
+					clientes.add(c);
+					
+					PediDAO daoPedido = new PediDAO();
+					Pedido pedi = new Pedido();
+					pedi.setIDusuario(c.getId());
+					List<EntidadeDominio> pedidos = daoPedido.consultar(pedi);
+					if(pedidos != null)
+					{
+						List<Pedido> listaPedidos = new ArrayList<Pedido>();
+						for(int i = 0; i < pedidos.size(); i++)
+						{
+							pedi = (Pedido)pedidos.get(i);
+							listaPedidos.add(pedi);
+						}
+						c.setPedido(listaPedidos);
+					
+					}
+					
 
 				}
 				return clientes;

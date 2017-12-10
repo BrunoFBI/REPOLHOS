@@ -22,7 +22,7 @@
 				<table>
 					<tr>
 							
-							<input type="" id="txtId" name="txtId" value="${empty livro ? '' : livro.getId()}"/>
+							<input type="hidden" id="txtId" name="txtId" value="${empty livro ? '' : livro.getId()}"/>
 							<br> 
 							<td>
 				

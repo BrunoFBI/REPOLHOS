@@ -65,7 +65,7 @@ public class FinalPedidoWiewHelper implements IViewHelper{
 
 		ArrayList<Integer> indices = new ArrayList();
 		RequestDispatcher d = null;
-		
+		String pedShow = (String) request.getSession().getAttribute("pedShow");
 		String operacao = request.getParameter("operacao");
 		
 		if(operacao.equals("FINALIZAR")) {

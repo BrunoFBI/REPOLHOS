@@ -78,7 +78,7 @@ public class EnderecoViewHelper implements IViewHelper {
 	@Override
 	public void setView(Resultado resultado, HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		RequestDispatcher d=null;
+		RequestDispatcher d= null;
 		request.getSession().setAttribute("resultado", null);
 		request.getSession().setAttribute("endereco", null);
 		

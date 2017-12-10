@@ -146,32 +146,18 @@ public class ClienteViewHelper implements IViewHelper {
 			List<EntidadeDominio> entidades = resultado.getEntidades();
 			for (int i = 0; i < entidades.size(); i++) {
 				Cliente cli = (Cliente) entidades.get(i);
-				Map<Integer, Pedido> map = (Map<Integer, Pedido>)request.getSession().getAttribute("mapaUsuarios");	
 				if (request.getParameter("txtEmail").trim().equals(cli.getEmail()))
 
 				{
 					
-
-					request.getSession().setAttribute("userid", cli.getId().toString());
-					
-					if(!map.containsKey(cli.getId())) {
-						 Pedido ped = new Pedido();
-						 ped.setUnidade(new ArrayList<Unidade>());
-						 map.put(cli.getId(), ped);
-						 request.getSession().setAttribute("mapaUsuarios", map);
-					 }
-					
-					
+										
 					HttpSession sessao = request.getSession();
+					request.getSession().setAttribute("resultadoLogin", resultado);
 					sessao.setAttribute("usuario", cli);
 					
-					request.getSession().setAttribute("resultadoLogin", resultado);
-					 String nome = request.getParameter("local");
 					
-					 System.out.println("Eu sou o nome:" + nome);
-					
-					
-							
+					String nome = request.getParameter("local");				
+					System.out.println("Eu sou o nome:" + nome);		
 					if( nome != null) {
 						
 						d = request.getRequestDispatcher("Carrinho.jsp");

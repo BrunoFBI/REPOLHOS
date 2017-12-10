@@ -90,7 +90,10 @@
 <title>Login</title>
 </head>
 <body>
-	<div class="container">
+<div class="embed-responsive embed-responsive-16by9">
+  				<iframe class="embed-responsive-item" src="http://localhost:8080/MyProjectWeb/NavBar.jsp"></iframe>  				
+</div>
+	<div class="container" style="margin-top:-700px;">
     <div class="row">
         <div class="col-sm-6 col-md-4 col-md-offset-4" id="conteudo">
             <h1 class="text-center login-title">Faça Login para acessar Hyper Books</h1>
