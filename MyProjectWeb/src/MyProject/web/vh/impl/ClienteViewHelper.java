@@ -99,10 +99,6 @@ public class ClienteViewHelper implements IViewHelper {
 	public void setView(Resultado resultado, HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		RequestDispatcher d = null;
-		request.getSession().setAttribute("resultado", null);
-		request.getSession().setAttribute("cliente", null);
-		String stringID = (String)request.getSession().getAttribute("userid");
-
 		String operacao = request.getParameter("operacao");
 		
 
@@ -150,18 +146,21 @@ public class ClienteViewHelper implements IViewHelper {
 			List<EntidadeDominio> entidades = resultado.getEntidades();
 			for (int i = 0; i < entidades.size(); i++) {
 				Cliente cli = (Cliente) entidades.get(i);
-				
+				Map<Integer, Pedido> map = (Map<Integer, Pedido>)request.getSession().getAttribute("mapaUsuarios");	
 				if (request.getParameter("txtEmail").trim().equals(cli.getEmail()))
 
 				{
-					Map<Integer, Pedido> map = (Map<Integer, Pedido>)request.getSession().getAttribute("mapaUsuarios");
+					
+
+					request.getSession().setAttribute("userid", cli.getId().toString());
+					
 					if(!map.containsKey(cli.getId())) {
 						 Pedido ped = new Pedido();
 						 ped.setUnidade(new ArrayList<Unidade>());
 						 map.put(cli.getId(), ped);
 						 request.getSession().setAttribute("mapaUsuarios", map);
 					 }
-					request.getSession().setAttribute("userid", cli.getId().toString());
+					
 					
 					HttpSession sessao = request.getSession();
 					sessao.setAttribute("usuario", cli);
@@ -170,7 +169,6 @@ public class ClienteViewHelper implements IViewHelper {
 					 String nome = request.getParameter("local");
 					
 					 System.out.println("Eu sou o nome:" + nome);
-					System.out.println("Sou uma vadia " + stringID);
 					
 					
 							
@@ -185,7 +183,8 @@ public class ClienteViewHelper implements IViewHelper {
 						break;
 					}
 						
-				} else {
+				} 
+				else {
 					System.out.println(" entrei no else");
 					request.getSession().setAttribute("resultadoLogin", resultado);
 					d = request.getRequestDispatcher("Login.jsp");

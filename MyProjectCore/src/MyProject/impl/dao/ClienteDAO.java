@@ -141,17 +141,17 @@ public class ClienteDAO extends AbstractJdbcDAO {
 					List<Endereco> enderecos = new ArrayList<Endereco>();
 					while(rse.next()){
 						Endereco e = new Endereco();
-						e.setBairro("bairro");
-						e.setCep("CEP");
-						e.setCidade("cidade");
-						e.setEstado("estado");
-						e.setLogradouro("logradouro");
-						e.setNumero("numero");
-						e.setPais("pais");
-						e.setObs("obs");
+						e.setBairro(rse.getString("bairro"));
+						e.setCep(rse.getString("CEP"));
+						e.setCidade(rse.getString("bairro"));
+						e.setEstado(rse.getString("cidade"));
+						e.setLogradouro(rse.getString("logradouro"));
+						e.setNumero(rse.getString("numero"));
+						e.setPais(rse.getString("pais"));
+						e.setObs(rse.getString("obs"));
 						e.setId(rse.getInt("ID_Endereco"));
-						e.setTipo_log("tipo_Logradouro");
-						e.setTipo_res("tipo_Residencia");
+						e.setTipo_log(rse.getString("tipo_Logradouro"));
+						e.setTipo_res(rse.getString("tipo_Residencia"));
 						enderecos.add(e);						
 					}
 					c.setEndereco(enderecos);					

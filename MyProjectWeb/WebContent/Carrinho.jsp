@@ -42,6 +42,14 @@
 
 	}
 </script>
+<script>
+	function PegaIdEndereco(idEnd){
+		alert(idEnd);
+		document.getElementById("idbacana").value = idEnd;
+	}
+
+
+</script>
 </head>
 <body>
 
@@ -284,14 +292,28 @@
 								sb.append("</button>");
 								out.print(sb.toString());
 							} else {
-								StringBuilder sb = new StringBuilder();
-								sb.append("<form method='post' action='FinalizaCompras'>");
-								sb.append(
-										"<td><button type='submit' class='btn btn-success' id='operacao' name='operacao' value='FINALIZAR'>");
-								sb.append("FINALIZAR");
-								sb.append("</button>");
-								sb.append("</form>");
-								out.print(sb.toString());							
+								String txtId = (String) request.getSession().getAttribute("userid");				
+								if(cli.getEndereco().size() > 0){
+									StringBuilder sb = new StringBuilder();
+									sb.append("<form method='post' action='FinalizaCompras'>");
+									sb.append("<td><button type='submit' class='btn btn-success' id='operacao' name='operacao' value='FINALIZAR'>");
+									sb.append("FINALIZAR");
+									sb.append("</button>");
+									sb.append("<input type='hidden' name ='idbacana' id='idbacana'/>");
+									sb.append("</form>");
+									out.print(sb.toString());							
+								}
+								else{
+									StringBuilder sb = new StringBuilder();
+									sb.append("<form method='post' action='FinalizaCompras'>");
+									sb.append("<td><button type='submit' class='btn btn-success' id='operacao' name='operacao' value='FINALIZAR' disabled>");
+									sb.append("FINALIZAR");
+									sb.append("</button>");
+									sb.append("<input type='hidden' name ='idbacana' id='idbacana'/>");
+									sb.append("</form>");
+									out.print(sb.toString());			
+									
+								}
 							}
 						%>
 					
@@ -345,7 +367,6 @@
 							
 							else{
 								StringBuilder st  =  new StringBuilder();
-								 st.append(" <input type='hidden'/>'" );
 								 out.print(st.toString());	
 							}
 							
@@ -359,7 +380,7 @@
 						src="http://localhost:8080/MyProjectWeb/FakeEnd.jsp"
 						style="display: none;"></iframe>
 				</div>
-<!-- ----------------------------------------- AREA DE FINALIZAÇÃO DE COMPRAS------------------------------------------------------------------------------------->
+<!-- ----------------------------------------- AREA DE FINALIZAÇÃO DE COMPRAS---------------------------------------------------------------------------------------------------------->
 
  
  
@@ -393,16 +414,14 @@
 					st.append(cli.getEndereco().get(k).getNumero());;	
 					st.append("</td>");
 					st.append("<td>");
-					st.append("<form method='post' action='EndEntrega'>");
-					st.append("<button type='submit' class='btn btn-primary btn-sm'  id='operacao' name='operacao' value='ENTREGAR'>Prefiro Esse</button>");
-					st.append("<input type='hidden' value=' "+ cli.getEndereco().get(k).getId() +"' >");
-					st.append("</form>");
+					st.append("<input type='radio' class='btn btn-primary btn-sm'  id='EndID' value='"+	k +"' onclick='PegaIdEndereco(this.value)'></input>");
 					st.append("</td>");	
 					st.append("</tr>");				
 			}								
 				st.append("</table>");	
 				st.append("</div>");
 				out.print(st.toString());
+				
 			}								
 		%>	
           </div>

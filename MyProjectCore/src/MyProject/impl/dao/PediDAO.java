@@ -39,6 +39,7 @@ public PediDAO() {
 			pst.setDate(2,  date);
 			pst.setString(3, pedido.getStatus());
 			pst.setInt(4, pedido.getIDusuario());
+			System.out.println("aaaaaaa " + pedido.getEndereco().getId() );
 			pst.setInt(5, pedido.getEndereco().getId());
 			pst.setDouble(6, pedido.getPrecoTotal());
 			pst.setDouble(7, pedido.getPrecoFrete());

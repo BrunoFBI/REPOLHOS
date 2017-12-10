@@ -147,20 +147,14 @@
 		List<EntidadeDominio> entidades = resultado.getEntidades();
 		StringBuilder sbRegistro = new StringBuilder();
 		StringBuilder sbLink = new StringBuilder();
-		if(entidades == null ){
-			System.out.print("bbbbbbbbbbbbb");
-		}
 		
 		if(entidades != null){
-			for (int i = 0; i < entidades.size(); i++) {
-				System.out.print("ccccccccccccccccc");
+			for (int i = 0; i < entidades.size(); i++) {;
 				Livro l = (Livro) entidades.get(i);
 				sbRegistro.setLength(0);
 				sbLink.setLength(0);
 				
-			//	<a href="nome-do-lugar-a-ser-levado">descrição</a>
-				
-				
+
 				sbLink.append("<a href=PaginaLivro?");
 					sbLink.append("txtId=");
 					sbLink.append(l.getId());						

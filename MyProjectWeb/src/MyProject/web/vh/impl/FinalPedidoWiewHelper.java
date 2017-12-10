@@ -14,6 +14,7 @@ import MyProject.web.vh.IViewHelper;
 import MyProjectCore.aplicacao.Resultado;
 import MyProjectDominio.Cartao;
 import MyProjectDominio.Cliente;
+import MyProjectDominio.Endereco;
 import MyProjectDominio.EntidadeDominio;
 import MyProjectDominio.Pedido;
 
@@ -31,6 +32,7 @@ public class FinalPedidoWiewHelper implements IViewHelper{
 		int id = Integer.parseInt(txtId);
 		System.out.println( "sou OP: " + id );
 		
+		
 		if(operacao.equals("FINALIZAR")) {
 		Pedido p = map.get(id);
 		System.out.println( "sou OP" + p );
@@ -41,8 +43,12 @@ public class FinalPedidoWiewHelper implements IViewHelper{
 		p.setStatus("EM PROCESSO");
 		System.out.println("Pedido:" + p.getStatus());
 		p.setIDusuario(c.getId());
+		int Endid = Integer.parseInt(request.getParameter("idbacana"));
+		Endereco ID = c.getEndereco().get(Endid);
+		p.setEndereco(ID);
 			return p;
 		}
+		
 		
 		Pedido ped = new Pedido();
 		return ped;
@@ -59,18 +65,16 @@ public class FinalPedidoWiewHelper implements IViewHelper{
 
 		ArrayList<Integer> indices = new ArrayList();
 		RequestDispatcher d = null;
-		String usuario = (String) request.getSession().getAttribute("username");
 		
 		String operacao = request.getParameter("operacao");
 		
 		if(operacao.equals("FINALIZAR")) {
-			if(usuario != null) {
-				
+			
 				request.getSession().setAttribute("resultado", resultado);
 				d= request.getRequestDispatcher("FinalPedido.jsp");  
-				
-			}
+
 		}
+		d.forward(request, response);
 	}
 
 }
