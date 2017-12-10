@@ -19,6 +19,7 @@ import MyProject.web.command.impl.SalvarCommand;
 import MyProject.web.command.impl.VisualizarCommand;
 import MyProject.web.vh.IViewHelper;
 import MyProject.web.vh.impl.AddCarrinhoViewHelper;
+import MyProject.web.vh.impl.CartaoViewHelper;
 import MyProject.web.vh.impl.ClienteViewHelper;
 import MyProject.web.vh.impl.CupomViewHelper;
 import MyProject.web.vh.impl.EnderecoViewHelper;
@@ -61,6 +62,7 @@ public class Servlet extends HttpServlet {
     	commands.put("DESLOGAR", new DeslogarCommand());
     	commands.put("FINALIZAR", new SalvarCommand());
     	commands.put("ENTREGAR", new SalvarCommand());
+    	commands.put("CADASTRAR", new SalvarCommand());
     	/* Utilizando o ViewHelper para tratar especificações de qualquer tela e indexando 
     	 * cada viewhelper pela url em que esta servlet é chamada no form
     	 * garantimos que esta servelt atenderá qualquer entidade */
@@ -80,6 +82,7 @@ public class Servlet extends HttpServlet {
     	vhs.put("/MyProjectWeb/DeslogarCliente", new ClienteViewHelper());
     	vhs.put("/MyProjectWeb/FinalizaCompras", new FinalPedidoWiewHelper());
     	vhs.put("/MyProjectWeb/EndEntrega", new FinalPedidoWiewHelper());
+    	vhs.put("/MyProjectWeb/SalvarCartao", new CartaoViewHelper());
     }
     
     

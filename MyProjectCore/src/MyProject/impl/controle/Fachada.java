@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import MyProject.impl.dao.CartaoDAO;
 import MyProject.impl.dao.ClienteDAO;
 import MyProject.impl.dao.CupomDAO;
 import MyProject.impl.dao.EnderecoDAO;
@@ -18,6 +19,7 @@ import MyProjectCore.aplicacao.Resultado;
 import MyProjectCore.impl.negocio.ValidaCarrinho;
 import MyProjectCore.impl.negocio.ValidaCupom;
 import MyProjectCore.util.Autenticador;
+import MyProjectDominio.Cartao;
 import MyProjectDominio.Cliente;
 import MyProjectDominio.Cupom;
 import MyProjectDominio.Endereco;
@@ -55,6 +57,7 @@ public class Fachada implements IFachada{
 		EnderecoDAO endDao = new EnderecoDAO();
 		CupomDAO cupDao = new CupomDAO();
 		PediDAO  pedDao = new PediDAO();
+		CartaoDAO carDao = new CartaoDAO();
 		/* Adicionando cada dao no MAP indexando pelo nome da classe */
 		
 		daos.put(Livro.class.getName(), LivDao);
@@ -62,6 +65,7 @@ public class Fachada implements IFachada{
 		daos.put(Endereco.class.getName(), endDao);
 		daos.put(Cupom.class.getName(),cupDao);
 		daos.put(Pedido.class.getName(),pedDao);
+		daos.put(Cartao.class.getName(),carDao);
 		//Criando instâncias de regras de negócio a serem utilizados	
 		
 		//vrDadosObrigatoriosLivro vrDadosObrigatorioLivro = new vrDadosObrigatoriosLivro();

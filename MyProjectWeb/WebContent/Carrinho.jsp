@@ -59,8 +59,7 @@
 		if (stringId != null) {
 			if (!stringId.trim().equals("0")) {
 				if (request.getSession().getAttribute("usuariodeslogado") != null) {
-					Map<Integer, Pedido> mapaUsuarios = (Map<Integer, Pedido>) request.getSession()
-							.getAttribute("mapaUsuarios");
+					Map<Integer, Pedido> mapaUsuarios = (Map<Integer, Pedido>) request.getSession().getAttribute("mapaUsuarios");
 					Pedido p = mapaUsuarios.get(0);
 					mapaUsuarios.put(Integer.parseInt(stringId), p);
 					mapaUsuarios.remove(0);
