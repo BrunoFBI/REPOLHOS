@@ -44,7 +44,6 @@
 </script>
 <script>
 	function PegaIdEndereco(idEnd){
-		alert(idEnd);
 		document.getElementById("idbacana").value = idEnd;
 	}
 
@@ -217,7 +216,7 @@
 									precoFrete = (uni.getQuantidade() *12) + p.getQtdItens() ;
 									out.print(sb.toString());
 									/////////////////////////////////////////////////////////////////
-
+									String titulo = l.getTitulo();
 								}
 
 							}
@@ -226,8 +225,7 @@
 					<%
 						if (map != null) {
 							String txtId = (String) request.getSession().getAttribute("userid");
-							int id = Integer.parseInt(txtId);
-							//Map<Integer, Resultado> mapaResultado = (Map<Integer, Resultado>)request.getSession().getAttribute("mapaResultado");
+							int id = Integer.parseInt(txtId);				
 							StringBuilder sb = new StringBuilder();
 							Pedido p = map.get(id);
 							System.out.println("Sou uma ID: " + id);		
@@ -260,6 +258,8 @@
 							sb.append(p.getPrecoFinal());
 							sb.append("</h3></td>");
 							out.print(sb.toString());
+							
+							precoTotal = p.getPrecoTotal();
 						}
 					%>
 
@@ -293,6 +293,8 @@
 									sb.append("FINALIZAR");
 									sb.append("</button>");
 									sb.append("<input type='hidden' name ='idbacana' id='idbacana'/>");
+									sb.append("<input type='hidden' name ='precototal' value='"+precoTotal+"' id='precototal'/>");
+									sb.append("<input type='hidden' name ='titulo' value='Harry Potter' id='titulo'/>");
 									sb.append("</form>");
 									out.print(sb.toString());							
 								}
@@ -389,8 +391,8 @@
         <form>							
 		<table class="table table-striped table-dark table-responsive" style="width: 450px">
 		<tr>
-		<td><b> Nome do Livro</b></td>
-		<td><b> Valores</b></td>
+		<td><b> Rua</b></td>
+		<td><b> Num</b></td>
 		<td><b> Preferencial</b></td>
 		</tr>
             <%

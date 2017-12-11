@@ -14,6 +14,13 @@
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script>
+	function PegaCartao(idCar){
+		document.getElementById("idCart").value = idCar;
+	}
+
+
+</script>
 <title>Cadastro de Cartão</title>
 </head>
 <style>
@@ -331,29 +338,17 @@ hr{
 }
 </style>
 <body>
-
-<% 
-		Cliente cli = (Cliente) session.getAttribute("usuario");		
-		
-		if(cli.getCartao().size() == 0){
-				StringBuilder st = new StringBuilder();
-				
-					st.append("<div class='embed-responsive embed-responsive-16by9'>");
-					st.append("<iframe class='embed-responsive-item' src='http://localhost:8080/MyProjectWeb/NavBar.jsp'></iframe>");  	
-					st.append("</div>");	
-					out.print(st.toString());
-			}
-		
-		else{
-			StringBuilder st = new StringBuilder();
-			st.append("<div class='embed-responsive embed-responsive-16by9'>");	
-			st.append("</div>");	
-			out.print(st.toString());
-			}
+<%
+	Map<Integer, Pedido> map = (Map<Integer, Pedido>) request.getSession().getAttribute("mapaUsuarios");
+	String txtId = (String) request.getSession().getAttribute("userid");
+	int id = Integer.parseInt(txtId);
+	Cliente cli = (Cliente) session.getAttribute("usuario");
+	
 %>
-
-
-<div class="container wrapper" style="margin-top:-700px;">
+<div class="embed-responsive embed-responsive-16by9">
+  				<iframe class="embed-responsive-item" src="http://localhost:8080/MyProjectWeb/NavBar.jsp"></iframe>  				
+</div>
+<div class="container wrapper" style="margin-top: -700px;">
             <div class="row cart-head">
                 <div class="container">
                 <div class="row">
@@ -378,65 +373,68 @@ hr{
                         <div class="panel-heading">
                             Review Order <div class="pull-right"><small><a class="afix-1" href="#">Edit Cart</a></small></div>
                         </div>
-                        <div class="panel-body">
-                            <div class="form-group">
-                                <div class="col-sm-3 col-xs-3">
-                                    <img class="img-responsive" src="//c1.staticflickr.com/1/466/19681864394_c332ae87df_t.jpg" />
-                                </div>
-                                <div class="col-sm-6 col-xs-6">
-                                    <div class="col-xs-12">Product name</div>
-                                    <div class="col-xs-12"><small>Quantity:<span>1</span></small></div>
-                                </div>
-                                <div class="col-sm-3 col-xs-3 text-right">
-                                    <h6><span>$</span>25.00</h6>
-                                </div>
-                            </div>
-                            <div class="form-group"><hr /></div>
-                            <div class="form-group">
-                                <div class="col-sm-3 col-xs-3">
-                                    <img class="img-responsive" src="//c1.staticflickr.com/1/466/19681864394_c332ae87df_t.jpg" />
-                                </div>
-                                <div class="col-sm-6 col-xs-6">
-                                    <div class="col-xs-12">Product name</div>
-                                    <div class="col-xs-12"><small>Quantity:<span>1</span></small></div>
-                                </div>
-                                <div class="col-sm-3 col-xs-3 text-right">
-                                    <h6><span>$</span>25.00</h6>
-                                </div>
-                            </div>
-                            <div class="form-group"><hr /></div>
-                            <div class="form-group">
-                                <div class="col-sm-3 col-xs-3">
-                                    <img class="img-responsive" src="//c1.staticflickr.com/1/466/19681864394_c332ae87df_t.jpg" />
-                                </div>
-                                <div class="col-sm-6 col-xs-6">
-                                    <div class="col-xs-12">Product name</div>
-                                    <div class="col-xs-12"><small>Quantity:<span>2</span></small></div>
-                                </div>
-                                <div class="col-sm-3 col-xs-3 text-right">
-                                    <h6><span>$</span>50.00</h6>
-                                </div>
-                            </div>
-                            <div class="form-group"><hr /></div>
-                            <div class="form-group">
-                                <div class="col-xs-12">
-                                    <strong>Subtotal</strong>
-                                    <div class="pull-right"><span>$</span><span>200.00</span></div>
-                                </div>
-                                <div class="col-xs-12">
-                                    <small>Shipping</small>
-                                    <div class="pull-right"><span>-</span></div>
-                                </div>
-                            </div>
-                            <div class="form-group"><hr /></div>
-                            <div class="form-group">
-                                <div class="col-xs-12">
-                                    <strong>Order Total</strong>
-                                    <div class="pull-right"><span>$</span><span>150.00</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                       <% 
+                       		Pedido p = map.get(id);	
+                       StringBuilder bui = new StringBuilder();
+                      
+                       	for(int i = 0; i <  p.getUnidade().size() ; i++){
+                       bui.append("<div class='panel-body'>"); 
+                       bui.append("<div class='form-group'>"); 
+                       bui.append("<div class='col-sm-3 col-xs-3'>");  
+                       bui.append("<img class='img-responsive' src='//c1.staticflickr.com/1/466/19681864394_c332ae87df_t.jpg'a />");  
+                       bui.append("</div>");
+                       bui.append("<div class='col-sm-6 col-xs-6'>");  
+                       bui.append("<div class='col-xs-12'>Harry Potter</div>");   
+                       bui.append("<div class='col-xs-12'><small>");
+                       bui.append(p.getQtdItens());
+                       bui.append( "<span>1</span></small></div>");   
+                       bui.append("</div>"); 
+                       bui.append("<div class='col-sm-3 col-xs-3 text-right'>"); 
+                       bui.append("<h6><span>$</span>");
+                       bui.append(p.getPrecoTotal() / p.getQtdItens());
+                       bui.append("</h6>"); 
+                       bui.append("</div>"); 
+                       bui.append("</div>"); 
+                       out.print(bui.toString());
+                       	}
+                         %> 
+                            
+                         <% 
+                            StringBuilder bu = new StringBuilder();
+                     	Pedido pi= map.get(id);	    
+                     bu.append("<div class='form-group'><hr /></div>  ");                        
+                     bu.append("<div class='form-group'><hr /></div>");       
+                     bu.append("<div class='form-group'>");        
+                     bu.append("<div class='col-xs-12'>");            
+                     bu.append("<strong>Subtotal</strong>");                
+                     bu.append("<div class='pull-right'><span>$</span><span>"); 
+                     bu.append(pi.getPrecoTotal());
+                     bu.append("</span></div>");
+                     bu.append("</div>");           
+                     bu.append("<div class='col-xs-12'>");           
+                     bu.append("<small>frete</small>");               
+                     bu.append(" <div class='pull-right'><span>");
+                     bu.append(pi.getPrecoFrete());		 
+                     bu.append("</span></div>");
+                     bu.append("</div>");           
+                     bu.append("</div>");       
+                     bu.append("<div class='form-group'><hr /></div>");       
+                     bu.append(" <div class='form-group'>");       
+                     bu.append("<div class='col-xs-12'>");            
+                     bu.append("<strong>Valor final</strong>");               
+                     bu.append("<div class='pull-right'><span>");
+                     bu.append(pi.getPrecoFinal());   
+                     bu.append("</span><span></span></div>");   
+                     bu.append(" </div>");           
+                     bu.append("</div>");
+                     bu.append("<form method='post' action='fazCheckout'>");
+                     bu.append("<input type='submit' id='operacao'class='btn btn-primary btn-sm' name='operacao' value='CHECKOUT'/>");
+                     bu.append("<input type='hidden' name ='idCart' id='idCart'/>");
+                     bu.append("</div>");    
+                     bu.append("</div>"); 
+                     bu.append("</form>");
+                     out.print(bu.toString());
+                    %>   
                     <!--REVIEW ORDER END-->
                 </div>
                 <div class="row cart-body">
@@ -446,22 +444,68 @@ hr{
                     
                     <!--REVIEW ORDER END-->
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-pull-6 col-sm-pull-6">
-                <div class="embed-responsive embed-responsive-16by9" style="height:500px; ">
-  				<iframe class="embed-responsive-item"  src="http://localhost:8080/MyProjectWeb/Cartao.jsp" allowfullscreen></iframe>  				
-				</div>
-                <%            	
-                	if(cli.getCartao().size() == 0){              	
-                     StringBuilder st = new StringBuilder();               	
-                     st.append("<button type='button' class='btn btn-primary btn-block'>Cadastre um cartão para finalizar</button>");
-                     out.print(st.toString());
-                	}
-                	else{
-                		StringBuilder st = new StringBuilder();               	
-                        st.append("<button type='button' class='btn btn-primary btn-block'>Selecione o Cartão de pagamento</button>");
-                        out.print(st.toString());
-                	}
-                %>
+               
+               <%           		
+               if(cli.getCartao().size() == 0){              	
+               		StringBuilder sb = new StringBuilder();
+               		sb.append("<div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-pull-6 col-sm-pull-6'>");
+               		sb.append("<div class='embed-responsive embed-responsive-16by9' style='height:500px;'>");
+               		sb.append("<iframe class='embed-responsive-item'  src='http://localhost:8080/MyProjectWeb/Cartao.jsp' allowfullscreen></iframe>");
+               		sb.append("<div>");
+               		out.print(sb.toString());
+               }
+              %>
+            			
+            	<%		
+            			
+            	if(cli.getCartao().size() > 0){       
+            		StringBuilder st = new StringBuilder();
+            		st.append("<div class='col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-pull-6 col-sm-pull-6'>");
+            		st.append("<table class='table table-striped table-dark table-responsive' style='width: 450px'>");	
+            		st.append("<tr>");	
+            		st.append("<td><b> Codigo</b></td>");
+            		st.append("<td><b> Bandeira</b></td>");
+            		st.append("<td><b> Preferencial</b></td>");
+            		st.append("</tr>");
+            		
+            		if(cli != null)
+    	 			{
+    	 				
+    	 				
+    	 				for(int k = 0; k < cli.getCartao().size(); k++){
+    	 					st.append("<tr>");
+    	 					st.append("<td><li>");
+    	 					st.append(cli.getCartao().get(k).getCodigo());
+    	 					st.append("</li></td>");			
+    	 					st.append("<td>");
+    	 					st.append(cli.getCartao().get(k).getBandeira());
+    	 					st.append("</td>");
+    	 					st.append("<td>");
+    	 					st.append("<button type='button' class='btn btn-primary btn-sm'  id='EndID' value='"+k+"' onclick='PegaCartao(this.value)'>Quero este</input>");
+    	 					st.append("</td>");	
+    	 					st.append("</tr>");				
+    	 			}								
+    	 				st.append("</table>");	
+    	 				st.append("</div>");
+    	 				out.print(st.toString());
+    	 				
+    	 			}								
+            	}
+            	
+            	 	%>
+            	      </div>
+                    <%   	
+	                if(cli.getCartao().size() == 0){              	
+	                     StringBuilder st = new StringBuilder();               	
+	                     st.append("<button type='button' class='btn btn-primary btn-block'>Cadastre um cartão para finalizar</button>");
+	                     out.print(st.toString());
+	                	}
+	                	else{
+	                		StringBuilder st = new StringBuilder();               	
+	                        st.append("<button type='button' class='btn btn-primary btn-block'>Selecione o Cartão de pagamento</button>");
+	                        out.print(st.toString());
+	                	}
+	                %>
                 </div>
                 
                 </form>

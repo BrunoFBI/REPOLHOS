@@ -76,6 +76,11 @@
     <url-pattern>/SalvarCartao</url-pattern>
   </servlet-mapping>   
             
+  <servlet-mapping>
+    <servlet-name>Servlet</servlet-name>
+    <url-pattern>/fazCheckout</url-pattern>
+  </servlet-mapping>   
+            
         
     
  

@@ -45,9 +45,18 @@ public class FinalPedidoWiewHelper implements IViewHelper{
 		p.setIDusuario(c.getId());
 		int Endid = Integer.parseInt(request.getParameter("idbacana"));
 		Endereco ID = c.getEndereco().get(Endid);
+		double ptotal = Double.parseDouble(request.getParameter("precototal"));
+		p.setPrecoTotal(ptotal);
 		p.setEndereco(ID);
 			return p;
 		}
+
+		if(operacao.equals("CHECKOUT")) {
+			Pedido p = map.get(id);
+			double ptotal = Double.parseDouble(request.getParameter("idCart"));
+			p.setPrecoTotal(ptotal);
+				return p;
+			}
 		
 		
 		Pedido ped = new Pedido();
@@ -74,6 +83,13 @@ public class FinalPedidoWiewHelper implements IViewHelper{
 				d= request.getRequestDispatcher("FinalPedido.jsp");  
 
 		}
+		if(operacao.equals("CHECKOUT")) {
+			
+			request.getSession().setAttribute("resultado", resultado);
+			d= request.getRequestDispatcher("FinalPedido.jsp");  
+
+	}
+		
 		d.forward(request, response);
 	}
 

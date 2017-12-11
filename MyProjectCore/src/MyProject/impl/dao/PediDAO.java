@@ -56,6 +56,8 @@ public PediDAO() {
 				Livro l = pedido.getUnidade().get(i).getLivro();
 				pst = connection.prepareStatement(
 				"INSERT INTO ItensPedido( pedido_id, quantidade, id_livro, preço) VALUES (?, ?, ?, ?)");
+				
+				
 				pst.setInt(1, pedido.getId());
 				pst.setInt(2, unidade.getQuantidade());
 				pst.setInt(3, l.getId());
@@ -101,11 +103,12 @@ public PediDAO() {
 
 			
 			if(p.getIDusuario() == null)
-				pst = connection.prepareStatement("SELECT * FROM pedidos WHERE id_pedido = " + idPedido);
-			else
-				pst = connection.prepareStatement("SELECT * FROM pedidos  INNER JOIN endereco e on e.id = pedidos.id_endereco" 
-			+ "  WHERE pedidos.id_cliente = " + p.getIDusuario());
+				pst = connection.prepareStatement("SELECT * FROM pedido WHERE id_pedido = " + idPedido);
 			
+			else {
+				pst = connection.prepareStatement("SELECT * FROM pedido  INNER JOIN endereco e on e.ID_Endereco = pedido.id_endereco WHERE pedido.id_cliente = " + p.getIDusuario());
+			}
+			System.out.println("Sou pst" + pst);
 			ResultSet pstPedido = pst.executeQuery();
 			List<EntidadeDominio> pedidos = new ArrayList<EntidadeDominio>();
 			while(pstPedido.next())
@@ -121,17 +124,17 @@ public PediDAO() {
 				
 				pedido.setEndereco(e);
 				pedido.setId(pstPedido.getInt("id_pedido"));
-				pedido.setId(pstPedido.getInt("qtde_itens"));
-				pedido.setDtPedido(pstPedido.getDate("dtPedido"));
-				pedido.setStatus(pstPedido.getString("status"));
+				pedido.setQtdItens(pstPedido.getInt("quantidade"));
+				pedido.setDtPedido(pstPedido.getDate("dt_pedido"));
+				pedido.setStatus(pstPedido.getString("Pstatus"));
 				pedido.setIDusuario(pstPedido.getInt("id_cliente"));
-				pedido.setPrecoTotal(pstPedido.getDouble("total"));
+				pedido.setPrecoTotal(pstPedido.getDouble("vlr_total"));
 				pedido.setPrecoFrete(pstPedido.getDouble("frete"));
 				
 				
-				pst = connection.prepareStatement("SELECT * FROM itens"
+				pst = connection.prepareStatement("SELECT * FROM itenspedido"
 						+ " INNER JOIN livros ON "
-						+ "(itens.id_livro = livros.id) WHERE 1=1");
+						+ "(itenspedido.id_livro = livros.id) WHERE 1=1");
 				ResultSet itensPedido = pst.executeQuery();
 				List<Unidade> unidade = new ArrayList<Unidade>();
 				while(itensPedido.next())
@@ -139,7 +142,7 @@ public PediDAO() {
 					Livro l = new Livro();
 					Unidade i = new Unidade();
 					i.setQuantidade(itensPedido.getInt("quantidade"));
-					i.setPreco(itensPedido.getDouble("valor_item"));
+					i.setPreco(itensPedido.getDouble("preço"));
 					l.setTitulo(itensPedido.getString("titulo"));
 					l.setValor(itensPedido.getDouble("valor"));
 					i.setLivro(l);
@@ -163,8 +166,27 @@ public PediDAO() {
 
 	@Override
 	public void alterar(EntidadeDominio entidade) throws SQLException {
-		// TODO Auto-generated method stub
+		openConnection();
+		PreparedStatement pst = null;
+		Pedido p = (Pedido)entidade;
+		Integer idPedido = p.getId();
 		
+		try {
+			connection.setAutoCommit(false);
+			StringBuilder sql = new StringBuilder();
+
+			
+			pst = connection.prepareStatement("UPDATE pedido SET  Pstatus='APROVADO'" + 
+										" WHERE pedido.id_cliente =" + p.getIDusuario());
+			System.out.println(pst);
+			pst.executeUpdate();			
+			connection.commit();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+
 	}
 
 }

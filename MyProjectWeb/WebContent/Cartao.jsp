@@ -363,10 +363,10 @@ hr{
                                 <div class="col-md-12"><strong>Bandeira</strong></div>
                                 <div class="col-md-12">
                                     <select id="txtBandeira" placeholder="Bandeira" name="txtBandeira" class="form-control">
-                                        <option value="5">Visa</option>
-                                        <option value="6">MasterCard</option>
-                                        <option value="7">Xerecard Express</option>
-                                        <option value="8">Discover</option>
+                                        <option value="Visa">Visa</option>
+                                        <option value="MasterCard">MasterCard</option>
+                                        <option value="Xerecard Express">Xerecard Express</option>
+                                        <option value="Discover">Discover</option>
                                     </select>
                                 </div>
                             </div>
