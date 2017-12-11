@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import MyProjectDominio.Endereco;
 import MyProjectDominio.EntidadeDominio;
 import MyProjectDominio.Livro;
 import MyProjectDominio.Pedido;
@@ -88,17 +88,85 @@ public PediDAO() {
 		}
 	}
 
+	
+
+
+
+	public List<EntidadeDominio> consultar(EntidadeDominio entidade) throws SQLException {
+		try {
+			openConnection();
+			Pedido p = (Pedido)entidade;
+			Integer idPedido = p.getId();
+			PreparedStatement pst = null;
+
+			
+			if(p.getIDusuario() == null)
+				pst = connection.prepareStatement("SELECT * FROM pedidos WHERE id_pedido = " + idPedido);
+			else
+				pst = connection.prepareStatement("SELECT * FROM pedidos  INNER JOIN endereco e on e.id = pedidos.id_endereco" 
+			+ "  WHERE pedidos.id_cliente = " + p.getIDusuario());
+			
+			ResultSet pstPedido = pst.executeQuery();
+			List<EntidadeDominio> pedidos = new ArrayList<EntidadeDominio>();
+			while(pstPedido.next())
+			{
+				Endereco e = new Endereco();
+				Pedido pedido = new Pedido();
+				e.setLogradouro(pstPedido.getString("logradouro"));
+				e.setBairro(pstPedido.getString("bairro"));
+				e.setCep(pstPedido.getString("numero"));
+				e.setCidade(pstPedido.getString("cidade"));
+				e.setEstado(pstPedido.getString("estado"));
+				e.setPais(pstPedido.getString("cidade"));
+				
+				pedido.setEndereco(e);
+				pedido.setId(pstPedido.getInt("id_pedido"));
+				pedido.setId(pstPedido.getInt("qtde_itens"));
+				pedido.setDtPedido(pstPedido.getDate("dtPedido"));
+				pedido.setStatus(pstPedido.getString("status"));
+				pedido.setIDusuario(pstPedido.getInt("id_cliente"));
+				pedido.setPrecoTotal(pstPedido.getDouble("total"));
+				pedido.setPrecoFrete(pstPedido.getDouble("frete"));
+				
+				
+				pst = connection.prepareStatement("SELECT * FROM itens"
+						+ " INNER JOIN livros ON "
+						+ "(itens.id_livro = livros.id) WHERE 1=1");
+				ResultSet itensPedido = pst.executeQuery();
+				List<Unidade> unidade = new ArrayList<Unidade>();
+				while(itensPedido.next())
+				{
+					Livro l = new Livro();
+					Unidade i = new Unidade();
+					i.setQuantidade(itensPedido.getInt("quantidade"));
+					i.setPreco(itensPedido.getDouble("valor_item"));
+					l.setTitulo(itensPedido.getString("titulo"));
+					l.setValor(itensPedido.getDouble("valor"));
+					i.setLivro(l);
+					unidade.add(i);
+				}
+				itensPedido.close();			
+				pedido.setUnidade(unidade);
+				pedidos.add(pedido);
+			}
+			pstPedido.close();
+			
+			
+			return pedidos;
+		}catch(SQLException e){
+			e.printStackTrace();
+		} finally {
+			connection.close();
+		}
+		return null;
+	}
+
 	@Override
 	public void alterar(EntidadeDominio entidade) throws SQLException {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
-	public List<EntidadeDominio> consultar(EntidadeDominio entidade) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+}
 
 	
-}

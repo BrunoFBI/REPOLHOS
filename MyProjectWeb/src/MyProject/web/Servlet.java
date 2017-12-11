@@ -86,14 +86,7 @@ public class Servlet extends HttpServlet {
     }
     
     
-    /** 
-     * TODO Descrição do Método
-     * @param req
-     * @param resp
-     * @throws ServletException
-     * @throws IOException
-     * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
-     */
+   
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException,
     		IOException {

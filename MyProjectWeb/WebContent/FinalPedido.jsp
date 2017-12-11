@@ -330,9 +330,29 @@ hr{
     }
 }
 </style>
-<div class="embed-responsive embed-responsive-16by9">
-  				<iframe class="embed-responsive-item" src="http://localhost:8080/MyProjectWeb/NavBar.jsp"></iframe>  				
-</div>
+<body>
+
+<% 
+		Cliente cli = (Cliente) session.getAttribute("usuario");		
+		
+		if(cli.getCartao().size() == 0){
+				StringBuilder st = new StringBuilder();
+				
+					st.append("<div class='embed-responsive embed-responsive-16by9'>");
+					st.append("<iframe class='embed-responsive-item' src='http://localhost:8080/MyProjectWeb/NavBar.jsp'></iframe>");  	
+					st.append("</div>");	
+					out.print(st.toString());
+			}
+		
+		else{
+			StringBuilder st = new StringBuilder();
+			st.append("<div class='embed-responsive embed-responsive-16by9'>");	
+			st.append("</div>");	
+			out.print(st.toString());
+			}
+%>
+
+
 <div class="container wrapper" style="margin-top:-700px;">
             <div class="row cart-head">
                 <div class="container">
@@ -430,8 +450,7 @@ hr{
                 <div class="embed-responsive embed-responsive-16by9" style="height:500px; ">
   				<iframe class="embed-responsive-item"  src="http://localhost:8080/MyProjectWeb/Cartao.jsp" allowfullscreen></iframe>  				
 				</div>
-                <%
-                	Cliente cli = (Cliente) session.getAttribute("usuario");
+                <%            	
                 	if(cli.getCartao().size() == 0){              	
                      StringBuilder st = new StringBuilder();               	
                      st.append("<button type='button' class='btn btn-primary btn-block'>Cadastre um cartão para finalizar</button>");
